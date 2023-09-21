@@ -14,7 +14,7 @@
   };
 
   outputs = { self, fstar, flake-utils, nixpkgs, karamel }:
-    flake-utils.lib.eachSystem [ "x86_64-linux" ] (system:
+    flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
         fstarPackages = fstar.packages.${system};
