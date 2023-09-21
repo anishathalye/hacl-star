@@ -2,11 +2,11 @@
   description = "Hacl*";
 
   inputs = {
-    fstar.url = "github:fstarlang/fstar";
+    fstar.url = "github:pnmadelaine/fstar/flake";
     flake-utils.follows = "fstar/flake-utils";
     nixpkgs.follows = "fstar/nixpkgs";
     karamel = {
-      url = "github:fstarlang/karamel";
+      url = "github:pnmadelaine/karamel/flake";
       inputs.fstar.follows = "fstar";
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
