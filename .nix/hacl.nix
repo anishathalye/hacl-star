@@ -60,7 +60,6 @@
         ]
         || lib.any (lib.flip lib.hasPrefix relPath) [
           "code"
-          "hints"
           "lib"
           "providers"
           "secure_api"
