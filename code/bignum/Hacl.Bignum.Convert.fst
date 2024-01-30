@@ -55,35 +55,35 @@ let bn_from_bytes_be_ #t len b res =
 inline_for_extraction noextract
 let bn_from_bytes_be_st (t:limb_t) =
     len:size_t{0 < v len /\ numbytes t * v (blocks len (size (numbytes t))) <= max_size_t}
-  -> b:lbuffer uint8 len
-  -> res:lbignum t (blocks len (size (numbytes t))) ->
+  -> output:lbignum t (blocks len (size (numbytes t)))
+  -> b:lbuffer uint8 len ->
   Stack unit
-  (requires fun h -> live h b /\ live h res /\ disjoint res b)
-  (ensures  fun h0 _ h1 -> modifies (loc res) h0 h1 /\
-    as_seq h1 res == S.bn_from_bytes_be (v len) (as_seq h0 b))
+  (requires fun h -> live h b /\ live h output /\ disjoint output b)
+  (ensures  fun h0 _ h1 -> modifies (loc output) h0 h1 /\
+    as_seq h1 output == S.bn_from_bytes_be (v len) (as_seq h0 b))
 
 
 inline_for_extraction noextract
 val mk_bn_from_bytes_be: #t:limb_t -> is_known_len:bool -> bn_from_bytes_be_st t
-let mk_bn_from_bytes_be #t is_known_len len b res =
+let mk_bn_from_bytes_be #t is_known_len len output b =
   push_frame ();
   if is_known_len then begin
     [@inline_let] let numb = size (numbytes t) in
     [@inline_let] let bnLen = blocks len numb in
     [@inline_let] let tmpLen = numb *! bnLen in
     if tmpLen =. len then
-      bn_from_bytes_be_ bnLen b res
+      bn_from_bytes_be_ bnLen b output
     else begin
       let tmp = create tmpLen (u8 0) in
       update_sub tmp (tmpLen -! len) len b;
-      bn_from_bytes_be_ bnLen tmp res end end
+      bn_from_bytes_be_ bnLen tmp output end end
   else begin
     [@inline_let] let numb = size (numbytes t) in
     let bnLen = blocks len numb in
     let tmpLen = numb *! bnLen in
     let tmp = create tmpLen (u8 0) in
     update_sub tmp (tmpLen -! len) len b;
-    bn_from_bytes_be_ bnLen tmp res end;
+    bn_from_bytes_be_ bnLen tmp output end;
   pop_frame ()
 
 
@@ -103,35 +103,35 @@ let bn_from_bytes_be #t =
 inline_for_extraction noextract
 let bn_from_bytes_le_st (t:limb_t) =
     len:size_t{0 < v len /\ numbytes t * v (blocks len (size (numbytes t))) <= max_size_t}
-  -> b:lbuffer uint8 len
-  -> res:lbignum t (blocks len (size (numbytes t))) ->
+  -> output:lbignum t (blocks len (size (numbytes t)))
+  -> b:lbuffer uint8 len ->
   Stack unit
-  (requires fun h -> live h b /\ live h res /\ disjoint res b)
-  (ensures  fun h0 _ h1 -> modifies (loc res) h0 h1 /\
-    as_seq h1 res == S.bn_from_bytes_le (v len) (as_seq h0 b))
+  (requires fun h -> live h b /\ live h output /\ disjoint output b)
+  (ensures  fun h0 _ h1 -> modifies (loc output) h0 h1 /\
+    as_seq h1 output == S.bn_from_bytes_le (v len) (as_seq h0 b))
 
 
 inline_for_extraction noextract
 val mk_bn_from_bytes_le: #t:limb_t -> is_known_len:bool -> bn_from_bytes_le_st t
-let mk_bn_from_bytes_le #t is_known_len len b res =
+let mk_bn_from_bytes_le #t is_known_len len output b =
   push_frame ();
   if is_known_len then begin
     [@inline_let] let numb = size (numbytes t) in
     [@inline_let] let bnLen = blocks len numb in
     [@inline_let] let tmpLen = numb *! bnLen in
     if tmpLen =. len then
-      uints_from_bytes_le res b
+      uints_from_bytes_le output b
     else begin
       let tmp = create tmpLen (u8 0) in
       update_sub tmp 0ul len b;
-      uints_from_bytes_le res tmp end end
+      uints_from_bytes_le output tmp end end
   else begin
     [@inline_let] let numb = size (numbytes t) in
     let bnLen = blocks len numb in
     let tmpLen = numb *! bnLen in
     let tmp = create tmpLen (u8 0) in
     update_sub tmp 0ul len b;
-    uints_from_bytes_le res tmp end;
+    uints_from_bytes_le output tmp end;
   pop_frame ()
 
 
@@ -174,13 +174,13 @@ let bn_to_bytes_be_ #t len b res =
 
 inline_for_extraction noextract
 let bn_to_bytes_be_st (t:limb_t) (len:size_t{0 < v len /\ numbytes t * v (blocks len (size (numbytes t))) <= max_size_t}) =
-    b:lbignum t (blocks len (size (numbytes t)))
-  -> res:lbuffer uint8 len ->
+    output:lbuffer uint8 len
+  -> b:lbignum t (blocks len (size (numbytes t))) ->
   Stack unit
   (requires fun h ->
-    live h b /\ live h res /\ disjoint res b)
-  (ensures  fun h0 _ h1 -> modifies (loc res) h0 h1 /\
-    as_seq h1 res == S.bn_to_bytes_be (v len) (as_seq h0 b))
+    live h b /\ live h output /\ disjoint output b)
+  (ensures  fun h0 _ h1 -> modifies (loc output) h0 h1 /\
+    as_seq h1 output == S.bn_to_bytes_be (v len) (as_seq h0 b))
 
 inline_for_extraction noextract
 val mk_bn_to_bytes_be:
@@ -189,7 +189,7 @@ val mk_bn_to_bytes_be:
   -> len:size_t{0 < v len /\ numbytes t * v (blocks len (size (numbytes t))) <= max_size_t} ->
   bn_to_bytes_be_st t len
 
-let mk_bn_to_bytes_be #t is_known_len len b res =
+let mk_bn_to_bytes_be #t is_known_len len output b =
   push_frame ();
   if is_known_len then begin
     [@inline_let] let numb = size (numbytes t) in
@@ -198,18 +198,18 @@ let mk_bn_to_bytes_be #t is_known_len len b res =
     let tmp = create tmpLen (u8 0) in
     if tmpLen =. len then begin
       LowStar.Ignore.ignore tmp;
-      bn_to_bytes_be_ bnLen b res end
+      bn_to_bytes_be_ bnLen b output end
     else begin
       HyperStack.ST.break_vc ();
       bn_to_bytes_be_ bnLen b tmp;
-      copy res (sub tmp (tmpLen -! len) len) end end
+      copy output (sub tmp (tmpLen -! len) len) end end
   else begin
     [@inline_let] let numb = size (numbytes t) in
     let bnLen = blocks len numb in
     let tmpLen = numb *! bnLen in
     let tmp = create tmpLen (u8 0) in
     bn_to_bytes_be_ bnLen b tmp;
-    copy res (sub tmp (tmpLen -! len) len) end;
+    copy output (sub tmp (tmpLen -! len) len) end;
   pop_frame ()
 
 
@@ -228,13 +228,13 @@ let bn_to_bytes_be #t =
 
 inline_for_extraction noextract
 let bn_to_bytes_le_st (t:limb_t) (len:size_t{0 < v len /\ numbytes t * v (blocks len (size (numbytes t))) <= max_size_t}) =
-    b:lbignum t (blocks len (size (numbytes t)))
-  -> res:lbuffer uint8 len ->
+    output:lbuffer uint8 len
+  -> b:lbignum t (blocks len (size (numbytes t))) ->
   Stack unit
   (requires fun h ->
-    live h b /\ live h res /\ disjoint res b)
-  (ensures  fun h0 _ h1 -> modifies (loc res) h0 h1 /\
-    as_seq h1 res == S.bn_to_bytes_le (v len) (as_seq h0 b))
+    live h b /\ live h output /\ disjoint output b)
+  (ensures  fun h0 _ h1 -> modifies (loc output) h0 h1 /\
+    as_seq h1 output == S.bn_to_bytes_le (v len) (as_seq h0 b))
 
 
 inline_for_extraction noextract
@@ -244,7 +244,7 @@ val mk_bn_to_bytes_le:
   -> len:size_t{0 < v len /\ numbytes t * v (blocks len (size (numbytes t))) <= max_size_t} ->
   bn_to_bytes_le_st t len
 
-let mk_bn_to_bytes_le #t is_known_len len b res =
+let mk_bn_to_bytes_le #t is_known_len len output b =
   push_frame ();
   if is_known_len then begin
     [@inline_let] let numb = size (numbytes t) in
@@ -253,17 +253,17 @@ let mk_bn_to_bytes_le #t is_known_len len b res =
     let tmp = create tmpLen (u8 0) in
     if tmpLen =. len then begin
       LowStar.Ignore.ignore tmp;
-      uints_to_bytes_le bnLen res b end
+      uints_to_bytes_le bnLen output b end
     else begin
       uints_to_bytes_le bnLen tmp b;
-      copy res (sub tmp 0ul len) end end
+      copy output (sub tmp 0ul len) end end
   else begin
     [@inline_let] let numb = size (numbytes t) in
     let bnLen = blocks len numb in
     let tmpLen = numb *! bnLen in
     let tmp = create tmpLen (u8 0) in
     uints_to_bytes_le bnLen tmp b;
-    copy res (sub tmp 0ul len) end;
+    copy output (sub tmp 0ul len) end;
   pop_frame ()
 
 

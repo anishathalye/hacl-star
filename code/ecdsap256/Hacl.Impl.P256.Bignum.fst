@@ -127,14 +127,14 @@ let bn_cmovznz4 res cin x y =
 let bn_add_mod4 res n x y =
   let h0 = ST.get () in
   SN.bn_add_mod_n_lemma (as_seq h0 n) (as_seq h0 x) (as_seq h0 y);
-  BN.bn_add_mod_n 4ul n x y res
+  BN.bn_add_mod_n 4ul res n x y
 
 
 [@CInline]
 let bn_sub4 res x y =
   let h0 = ST.get () in
   SN.bn_sub_lemma (as_seq h0 x) (as_seq h0 y);
-  let c = BN.bn_sub_eq_len 4ul x y res in
+  let c = BN.bn_sub_eq_len 4ul res x y in
   let h1 = ST.get () in
   assert (as_nat h1 res - v c * pow2 256 = as_nat h0 x - as_nat h0 y);
   BD.bn_eval_bound (as_seq h1 res) 4;
@@ -148,7 +148,7 @@ let bn_sub4 res x y =
 let bn_sub_mod4 res n x y =
   let h0 = ST.get () in
   SN.bn_sub_mod_n_lemma (as_seq h0 n) (as_seq h0 x) (as_seq h0 y);
-  BN.bn_sub_mod_n 4ul n x y res
+  BN.bn_sub_mod_n 4ul res n x y
 
 
 ///  Multiplication
@@ -173,14 +173,14 @@ let bn_sqr4 res x =
 let bn_to_bytes_be4 res f =
   let h0 = ST.get () in
   Hacl.Spec.Bignum.Convert.bn_to_bytes_be_lemma #U64 32 (as_seq h0 f);
-  Hacl.Bignum.Convert.mk_bn_to_bytes_be true 32ul f res
+  Hacl.Bignum.Convert.mk_bn_to_bytes_be true 32ul res f
 
 
 [@CInline]
 let bn_from_bytes_be4 res b =
   let h0 = ST.get () in
   Hacl.Spec.Bignum.Convert.bn_from_bytes_be_lemma #U64 32 (as_seq h0 b);
-  Hacl.Bignum.Convert.mk_bn_from_bytes_be true 32ul b res
+  Hacl.Bignum.Convert.mk_bn_from_bytes_be true 32ul res b
 
 
 [@CInline]

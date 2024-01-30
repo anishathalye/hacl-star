@@ -49,23 +49,23 @@ have the ability to switch easily to a 32-bit optimized version in the future.
 /* Arithmetic functions */
 /************************/\n";
 Comment
-"Write `a + b mod 2^256` in `res`.
+"Write `a + b mod 2^256` in `output`.
 
   This functions returns the carry.
 
-  The arguments a, b and res are meant to be 256-bit bignums, i.e. uint64_t[4]"]
+  The arguments a, b and output are meant to be 256-bit bignums, i.e. uint64_t[4]"]
 val add: BN.bn_add_eq_len_st t_limbs n_limbs
 
-[@@ Comment "Write `a - b mod 2^256` in `res`.
+[@@ Comment "Write `a - b mod 2^256` in `output`.
 
   This functions returns the carry.
 
-  The arguments a, b and res are meant to be 256-bit bignums, i.e. uint64_t[4]"]
+  The arguments a, b and output are meant to be 256-bit bignums, i.e. uint64_t[4]"]
 val sub: BN.bn_sub_eq_len_st t_limbs n_limbs
 
-[@@ Comment "Write `(a + b) mod n` in `res`.
+[@@ Comment "Write `(a + b) mod n` in `output`.
 
-  The arguments a, b, n and the outparam res are meant to be 256-bit bignums, i.e. uint64_t[4].
+  The arguments a, b, n and the outparam output are meant to be 256-bit bignums, i.e. uint64_t[4].
 
   Before calling this function, the caller will need to ensure that the following
   preconditions are observed.
@@ -73,9 +73,9 @@ val sub: BN.bn_sub_eq_len_st t_limbs n_limbs
   • b < n"]
 val add_mod: BN.bn_add_mod_n_st t_limbs n_limbs
 
-[@@ Comment "Write `(a - b) mod n` in `res`.
+[@@ Comment "Write `(a - b) mod n` in `output`.
 
-  The arguments a, b, n and the outparam res are meant to be 256-bit bignums, i.e. uint64_t[4].
+  The arguments a, b, n and the outparam output are meant to be 256-bit bignums, i.e. uint64_t[4].
 
   Before calling this function, the caller will need to ensure that the following
   preconditions are observed.
@@ -83,22 +83,22 @@ val add_mod: BN.bn_add_mod_n_st t_limbs n_limbs
   • b < n"]
 val sub_mod: BN.bn_sub_mod_n_st t_limbs n_limbs
 
-[@@ Comment "Write `a * b` in `res`.
+[@@ Comment "Write `a * b` in `output`.
 
   The arguments a and b are meant to be 256-bit bignums, i.e. uint64_t[4].
-  The outparam res is meant to be a 512-bit bignum, i.e. uint64_t[8]."]
-val mul: a:lbignum t_limbs n_limbs -> BN.bn_karatsuba_mul_st t_limbs n_limbs a
+  The outparam output is meant to be a 512-bit bignum, i.e. uint64_t[8]."]
+val mul: BN.bn_karatsuba_mul_st t_limbs n_limbs
 
-[@@ Comment "Write `a * a` in `res`.
+[@@ Comment "Write `a * a` in `output`.
 
   The argument a is meant to be a 256-bit bignum, i.e. uint64_t[4].
-  The outparam res is meant to be a 512-bit bignum, i.e. uint64_t[8]."]
-val sqr: a:lbignum t_limbs n_limbs -> BN.bn_karatsuba_sqr_st t_limbs n_limbs a
+  The outparam output is meant to be a 512-bit bignum, i.e. uint64_t[8]."]
+val sqr: BN.bn_karatsuba_sqr_st t_limbs n_limbs
 
-[@@ Comment "Write `a mod n` in `res`.
+[@@ Comment "Write `a mod n` in `output`.
 
   The argument a is meant to be a 512-bit bignum, i.e. uint64_t[8].
-  The argument n and the outparam res are meant to be 256-bit bignums, i.e. uint64_t[4].
+  The argument n and the outparam output are meant to be 256-bit bignums, i.e. uint64_t[4].
 
   The function returns false if any of the following preconditions are violated,
   true otherwise.
@@ -106,9 +106,9 @@ val sqr: a:lbignum t_limbs n_limbs -> BN.bn_karatsuba_sqr_st t_limbs n_limbs a
    • n % 2 = 1"]
 val mod: BS.bn_mod_slow_safe_st t_limbs n_limbs
 
-[@@ Comment "Write `a ^ b mod n` in `res`.
+[@@ Comment "Write `a ^ b mod n` in `output`.
 
-  The arguments a, n and the outparam res are meant to be 256-bit bignums, i.e. uint64_t[4].
+  The arguments a, n and the outparam output are meant to be 256-bit bignums, i.e. uint64_t[4].
 
   The argument b is a bignum of any size, and bBits is an upper bound on the
   number of significant bits of b. A tighter bound results in faster execution
@@ -126,9 +126,9 @@ val mod: BS.bn_mod_slow_safe_st t_limbs n_limbs
    • a < n"]
 val mod_exp_vartime: BS.bn_mod_exp_safe_st t_limbs n_limbs
 
-[@@ Comment "Write `a ^ b mod n` in `res`.
+[@@ Comment "Write `a ^ b mod n` in `output`.
 
-  The arguments a, n and the outparam res are meant to be 256-bit bignums, i.e. uint64_t[4].
+  The arguments a, n and the outparam output are meant to be 256-bit bignums, i.e. uint64_t[4].
 
   The argument b is a bignum of any size, and bBits is an upper bound on the
   number of significant bits of b. A tighter bound results in faster execution
@@ -146,9 +146,9 @@ val mod_exp_vartime: BS.bn_mod_exp_safe_st t_limbs n_limbs
    • a < n"]
 val mod_exp_consttime: BS.bn_mod_exp_safe_st t_limbs n_limbs
 
-[@@ Comment "Write `a ^ (-1) mod n` in `res`.
+[@@ Comment "Write `a ^ (-1) mod n` in `output`.
 
-  The arguments a, n and the outparam res are meant to be 256-bit bignums, i.e. uint64_t[4].
+  The arguments a, n and the outparam output are meant to be 256-bit bignums, i.e. uint64_t[4].
 
   Before calling this function, the caller will need to ensure that the following
   preconditions are observed.
@@ -181,20 +181,20 @@ val mont_ctx_init: MA.bn_field_init_st t_limbs n_limbs
 
 [@@ Comment "Deallocate the memory previously allocated by Hacl_Bignum256_mont_ctx_init.
 
-  The argument k is a montgomery context obtained through Hacl_Bignum256_mont_ctx_init."]
+  The argument ctx is a montgomery context obtained through Hacl_Bignum256_mont_ctx_init."]
 val mont_ctx_free: MA.bn_field_free_st t_limbs
 
-[@@ Comment "Write `a mod n` in `res`.
+[@@ Comment "Write `a mod n` in `output`.
 
   The argument a is meant to be a 512-bit bignum, i.e. uint64_t[8].
-  The outparam res is meant to be a 256-bit bignum, i.e. uint64_t[4].
-  The argument k is a montgomery context obtained through Hacl_Bignum256_mont_ctx_init."]
+  The outparam output is meant to be a 256-bit bignum, i.e. uint64_t[4].
+  The argument ctx is a montgomery context obtained through Hacl_Bignum256_mont_ctx_init."]
 val mod_precomp: BS.bn_mod_slow_ctx_st t_limbs n_limbs
 
-[@@ Comment "Write `a ^ b mod n` in `res`.
+[@@ Comment "Write `a ^ b mod n` in `output`.
 
-  The arguments a and the outparam res are meant to be 256-bit bignums, i.e. uint64_t[4].
-  The argument k is a montgomery context obtained through Hacl_Bignum256_mont_ctx_init.
+  The arguments a and the outparam output are meant to be 256-bit bignums, i.e. uint64_t[4].
+  The argument ctx is a montgomery context obtained through Hacl_Bignum256_mont_ctx_init.
 
   The argument b is a bignum of any size, and bBits is an upper bound on the
   number of significant bits of b. A tighter bound results in faster execution
@@ -210,10 +210,10 @@ val mod_precomp: BS.bn_mod_slow_ctx_st t_limbs n_limbs
   • a < n"]
 val mod_exp_vartime_precomp: BS.bn_mod_exp_ctx_st t_limbs n_limbs
 
-[@@ Comment "Write `a ^ b mod n` in `res`.
+[@@ Comment "Write `a ^ b mod n` in `output`.
 
-  The arguments a and the outparam res are meant to be 256-bit bignums, i.e. uint64_t[4].
-  The argument k is a montgomery context obtained through Hacl_Bignum256_mont_ctx_init.
+  The arguments a and the outparam output are meant to be 256-bit bignums, i.e. uint64_t[4].
+  The argument ctx is a montgomery context obtained through Hacl_Bignum256_mont_ctx_init.
 
   The argument b is a bignum of any size, and bBits is an upper bound on the
   number of significant bits of b. A tighter bound results in faster execution
@@ -229,10 +229,10 @@ val mod_exp_vartime_precomp: BS.bn_mod_exp_ctx_st t_limbs n_limbs
   • a < n"]
 val mod_exp_consttime_precomp: BS.bn_mod_exp_ctx_st t_limbs n_limbs
 
-[@@ Comment "Write `a ^ (-1) mod n` in `res`.
+[@@ Comment "Write `a ^ (-1) mod n` in `output`.
 
-  The argument a and the outparam res are meant to be 256-bit bignums, i.e. uint64_t[4].
-  The argument k is a montgomery context obtained through Hacl_Bignum256_mont_ctx_init.
+  The argument a and the outparam output are meant to be 256-bit bignums, i.e. uint64_t[4].
+  The argument ctx is a montgomery context obtained through Hacl_Bignum256_mont_ctx_init.
 
   Before calling this function, the caller will need to ensure that the following
   preconditions are observed.
@@ -271,13 +271,13 @@ val new_bn_from_bytes_le: BS.new_bn_from_bytes_le_st t_limbs
 [@@ Comment "Serialize a bignum into big-endian memory.
 
   The argument b points to a 256-bit bignum.
-  The outparam res points to 32 bytes of valid memory."]
+  The outparam output points to 32 bytes of valid memory."]
 val bn_to_bytes_be: Hacl.Bignum.Convert.bn_to_bytes_be_st t_limbs n_bytes
 
 [@@ Comment "Serialize a bignum into little-endian memory.
 
   The argument b points to a 256-bit bignum.
-  The outparam res points to 32 bytes of valid memory."]
+  The outparam output points to 32 bytes of valid memory."]
 val bn_to_bytes_le: Hacl.Bignum.Convert.bn_to_bytes_le_st t_limbs n_bytes
 
 [@@ CPrologue

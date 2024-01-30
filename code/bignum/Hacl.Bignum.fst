@@ -10,11 +10,11 @@ let bn_add1 #t aLen a b1 res =
 let bn_sub1 #t aLen a b1 res =
   Hacl.Bignum.Addition.bn_sub1 aLen a b1 res
 
-let bn_add_eq_len #t aLen a b res =
-  Hacl.Bignum.Addition.bn_add_eq_len aLen a b res
+let bn_add_eq_len #t aLen output a b =
+  Hacl.Bignum.Addition.bn_add_eq_len aLen a b output
 
-let bn_sub_eq_len #t aLen a b res =
-  Hacl.Bignum.Addition.bn_sub_eq_len aLen a b res
+let bn_sub_eq_len #t aLen output a b =
+  Hacl.Bignum.Addition.bn_sub_eq_len aLen a b output
 
 let bn_add #t aLen a bLen b res =
   Hacl.Bignum.Addition.bn_add aLen a bLen b res
@@ -25,40 +25,40 @@ let bn_sub #t aLen a bLen b res =
 let bn_reduce_once #t len n c0 res =
   push_frame ();
   let tmp = create len (uint #t 0) in
-  let c1 = bn_sub_eq_len len res n tmp in
+  let c1 = bn_sub_eq_len len tmp res n in
   let c = c0 -. c1 in
   map2T len res (mask_select c) res tmp;
   pop_frame()
 
-let bn_add_mod_n #t len n a b res =
-  let c0 = bn_add_eq_len len a b res in
-  bn_reduce_once len n c0 res
+let bn_add_mod_n #t len output n a b =
+  let c0 = bn_add_eq_len len output a b in
+  bn_reduce_once len n c0 output
 
-let bn_sub_mod_n #t len n a b res =
+let bn_sub_mod_n #t len output n a b =
   push_frame ();
-  let c0 = bn_sub_eq_len len a b res in
+  let c0 = bn_sub_eq_len len output a b in
   let tmp = create len (uint #t 0) in
-  let c1 = bn_add_eq_len len res n tmp in
+  let c1 = bn_add_eq_len len tmp output n in
   LowStar.Ignore.ignore c1;
   let c = uint #t 0 -. c0 in
-  map2T len res (mask_select c) tmp res;
+  map2T len output (mask_select c) tmp output;
   pop_frame ()
 
 let bn_mul1 #t aLen a l res =
   Hacl.Bignum.Multiplication.bn_mul1 #t aLen a l res
 
-let bn_karatsuba_mul #t len a b res =
+let bn_karatsuba_mul #t len output a b =
   let h0 = ST.get () in
   Hacl.Spec.Bignum.bn_karatsuba_mul_lemma (as_seq h0 a) (as_seq h0 b);
-  Hacl.Bignum.Karatsuba.bn_karatsuba_mul len a b res
+  Hacl.Bignum.Karatsuba.bn_karatsuba_mul len a b output
 
 let bn_mul #t aLen bLen a b res =
   Hacl.Bignum.Multiplication.bn_mul aLen a bLen b res
 
-let bn_karatsuba_sqr #t len a res =
+let bn_karatsuba_sqr #t len output a =
   let h0 = ST.get () in
   Hacl.Spec.Bignum.bn_karatsuba_sqr_lemma (as_seq h0 a);
-  Hacl.Bignum.Karatsuba.bn_karatsuba_sqr len a res
+  Hacl.Bignum.Karatsuba.bn_karatsuba_sqr len a output
 
 let bn_sqr #t len a res =
   let h0 = ST.get () in
@@ -117,8 +117,8 @@ let bn_sub_mod_n_ (#t:limb_t) (len:size_t{v len > 0}) : bn_sub_mod_n_st t len =
 /// functions!
 let mk_runtime_bn (t:limb_t) (len:meta_len t) : bn t = {
   len = len;
-  add = Hacl.Bignum.Addition.bn_add_eq_len_u len;
-  sub = Hacl.Bignum.Addition.bn_sub_eq_len_u len;
+  add = (fun output a b -> Hacl.Bignum.Addition.bn_add_eq_len_u len a b output);
+  sub = (fun output a b -> Hacl.Bignum.Addition.bn_sub_eq_len_u len a b output);
   add_mod_n = bn_add_mod_n_ len;
   sub_mod_n = bn_sub_mod_n_ len;
   mul = bn_karatsuba_mul len;
@@ -153,13 +153,13 @@ let bn_from_uint #t len x b =
   Hacl.Bignum.Convert.bn_from_uint len x b
 
 let bn_from_bytes_be #t len b res =
-  Hacl.Bignum.Convert.bn_from_bytes_be len b res
+  Hacl.Bignum.Convert.bn_from_bytes_be len res b
 
 let bn_to_bytes_be #t len b res =
-  Hacl.Bignum.Convert.bn_to_bytes_be len b res
+  Hacl.Bignum.Convert.bn_to_bytes_be len res b
 
 let bn_from_bytes_le #t len b res =
-  Hacl.Bignum.Convert.bn_from_bytes_le len b res
+  Hacl.Bignum.Convert.bn_from_bytes_le len res b
 
 let bn_to_bytes_le #t len b res =
-  Hacl.Bignum.Convert.bn_to_bytes_le len b res
+  Hacl.Bignum.Convert.bn_to_bytes_le len res b

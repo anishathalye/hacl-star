@@ -25,7 +25,7 @@ let bn_almost_mont_reduction #t k n nInv c res =
   push_frame ();
   let c0 = BM.bn_mont_reduction_loop_div_r #t k n nInv c res in
   let tmp = create len (uint #t #SEC 0) in
-  let c1 = k.BN.sub res n tmp in
+  let c1 = k.BN.sub tmp res n in
   LowStar.Ignore.ignore c1;
   let m = uint #t 0 -. c0 in
   map2T len res (mask_select m) tmp res;
@@ -36,7 +36,7 @@ let bn_almost_mont_mul #t k almost_mont_reduction n nInv_u64 aM bM resM =
   [@inline_let] let len = k.BN.len in
   push_frame ();
   let c = create (len +! len) (uint #t 0) in
-  k.BN.mul aM bM c;
+  k.BN.mul c aM bM;
   almost_mont_reduction n nInv_u64 c resM;
   pop_frame ()
 
@@ -45,7 +45,7 @@ let bn_almost_mont_sqr #t k almost_mont_reduction n nInv_u64 aM resM =
   [@inline_let] let len = k.BN.len in
   push_frame ();
   let c = create (len +! len) (uint #t 0) in
-  k.BN.sqr aM c;
+  k.BN.sqr c aM;
   almost_mont_reduction n nInv_u64 c resM;
   pop_frame ()
 

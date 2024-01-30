@@ -37,8 +37,9 @@ module SI = Hacl.Spec.Bignum.ModInv
 inline_for_extraction noextract
 let new_bn_from_bytes_be_st (t:limb_t) =
     r:HS.rid
-  -> len:size_t
-  -> b:lbuffer uint8 len ->
+  -> #l:Ghost.erased size_t
+  -> b:lbuffer uint8 l
+  -> len:size_t{len = Ghost.reveal l} ->
   ST (B.buffer (limb t))
   (requires fun h ->
     live h b /\
@@ -55,7 +56,7 @@ let new_bn_from_bytes_be_st (t:limb_t) =
 
 inline_for_extraction noextract
 val new_bn_from_bytes_be: #t:limb_t -> new_bn_from_bytes_be_st t
-let new_bn_from_bytes_be #t r len b =
+let new_bn_from_bytes_be #t r b len =
   [@inline_let]
   let numb = size (numbytes t) in
   if len = 0ul || not (blocks len numb <=. 0xfffffffful `FStar.UInt32.div` numb) then
@@ -72,7 +73,7 @@ let new_bn_from_bytes_be #t r len b =
       let res: Lib.Buffer.buffer (limb t) = res in
       assert (B.length res == FStar.UInt32.v (blocks len numb));
       let res: lbignum t (blocks len numb) = res in
-      BC.mk_bn_from_bytes_be false len b res;
+      BC.mk_bn_from_bytes_be false len res b;
       let h2 = ST.get () in
       B.(modifies_only_not_unused_in loc_none h0 h2);
       res
@@ -81,8 +82,9 @@ let new_bn_from_bytes_be #t r len b =
 inline_for_extraction noextract
 let new_bn_from_bytes_le_st (t:limb_t) =
     r:HS.rid
-  -> len:size_t
-  -> b:lbuffer uint8 len ->
+  -> #l:Ghost.erased size_t
+  -> b:lbuffer uint8 l
+  -> len:size_t{len = Ghost.reveal l} ->
   ST (B.buffer (limb t))
   (requires fun h ->
     live h b /\
@@ -99,7 +101,7 @@ let new_bn_from_bytes_le_st (t:limb_t) =
 
 inline_for_extraction noextract
 val new_bn_from_bytes_le: #t:limb_t -> new_bn_from_bytes_le_st t
-let new_bn_from_bytes_le #t r len b =
+let new_bn_from_bytes_le #t r b len =
   [@inline_let]
   let numb = size (numbytes t) in
   if len = 0ul || not (blocks len numb <=. 0xfffffffful `FStar.UInt32.div` numb) then
@@ -116,7 +118,7 @@ let new_bn_from_bytes_le #t r len b =
       let res: Lib.Buffer.buffer (limb t) = res in
       assert (B.length res == FStar.UInt32.v (blocks len numb));
       let res: lbignum t (blocks len numb) = res in
-      BC.mk_bn_from_bytes_le false len b res;
+      BC.mk_bn_from_bytes_le false len res b;
       let h2 = ST.get () in
       B.(modifies_only_not_unused_in loc_none h0 h2);
       res
@@ -124,16 +126,16 @@ let new_bn_from_bytes_le #t r len b =
 
 inline_for_extraction noextract
 let bn_mod_slow_safe_st (t:limb_t) (len:BN.meta_len t) =
-    n:lbignum t len
-  -> a:lbignum t (len +! len)
-  -> res:lbignum t len ->
+    output:lbignum t len
+  -> n:lbignum t len
+  -> a:lbignum t (len +! len) ->
   Stack bool
   (requires fun h ->
-    live h n /\ live h a /\ live h res /\
-    disjoint res n /\ disjoint res a)
-  (ensures  fun h0 r h1 -> modifies (loc res) h0 h1 /\
+    live h n /\ live h a /\ live h output /\
+    disjoint output n /\ disjoint output a)
+  (ensures  fun h0 r h1 -> modifies (loc output) h0 h1 /\
     r == BB.unsafe_bool_of_limb (SM.bn_check_modulus (as_seq h0 n)) /\
-    (r ==> bn_v h1 res == bn_v h0 a % bn_v h0 n))
+    (r ==> bn_v h1 output == bn_v h0 a % bn_v h0 n))
 
 
 inline_for_extraction noextract
@@ -143,33 +145,34 @@ val mk_bn_mod_slow_safe:
   -> bn_mod_slow:BR.bn_mod_slow_st t len ->
   bn_mod_slow_safe_st t len
 
-let mk_bn_mod_slow_safe #t len bn_mod_slow n a res =
+let mk_bn_mod_slow_safe #t len bn_mod_slow output n a =
   let h0 = ST.get () in
   let is_valid_m = BM.bn_check_modulus n in
   let nBits = size (bits t) *! BB.unsafe_size_from_limb (BL.bn_get_top_index len n) in
 
   if BB.unsafe_bool_of_limb is_valid_m then begin
     SL.bn_low_bound_bits_lemma #t #(v len) (as_seq h0 n);
-    bn_mod_slow nBits n a res end
+    bn_mod_slow nBits n a output end
   else
-    memset res (uint #t 0) len;
+    memset output (uint #t 0) len;
   BB.unsafe_bool_of_limb is_valid_m
 
 
 inline_for_extraction noextract
 let bn_mod_exp_safe_st (t:limb_t) (len:BN.meta_len t) =
-    n:lbignum t len
+    output:lbignum t len
+  -> n:lbignum t len
   -> a:lbignum t len
-  -> bBits:size_t{bits t * v (blocks0 bBits (size (bits t))) <= max_size_t}
-  -> b:lbignum t (blocks0 bBits (size (bits t)))
-  -> res:lbignum t len ->
+  -> #l:Ghost.erased size_t{bits t * v (blocks0 l (size (bits t))) <= max_size_t}
+  -> b:lbignum t (blocks0 l (size (bits t)))
+  -> b_bits:size_t{b_bits = Ghost.reveal l} ->
   Stack bool
   (requires fun h ->
-    live h n /\ live h a /\ live h b /\ live h res /\
-    disjoint res a /\ disjoint res b /\ disjoint res n /\ disjoint n a)
-  (ensures  fun h0 r h1 -> modifies (loc res) h0 h1 /\
-    r == BB.unsafe_bool_of_limb (SE.bn_check_mod_exp (as_seq h0 n) (as_seq h0 a) (v bBits) (as_seq h0 b)) /\
-    (r ==> SE.bn_mod_exp_post (as_seq h0 n) (as_seq h0 a) (v bBits) (as_seq h0 b) (as_seq h1 res)))
+    live h n /\ live h a /\ live h b /\ live h output /\
+    disjoint output a /\ disjoint output b /\ disjoint output n /\ disjoint n a)
+  (ensures  fun h0 r h1 -> modifies (loc output) h0 h1 /\
+    r == BB.unsafe_bool_of_limb (SE.bn_check_mod_exp (as_seq h0 n) (as_seq h0 a) (v b_bits) (as_seq h0 b)) /\
+    (r ==> SE.bn_mod_exp_post (as_seq h0 n) (as_seq h0 a) (v b_bits) (as_seq h0 b) (as_seq h1 output)))
 
 
 inline_for_extraction noextract
@@ -180,31 +183,31 @@ val mk_bn_mod_exp_safe:
   -> bn_mod_exp:BE.bn_mod_exp_st t len ->
   bn_mod_exp_safe_st t len
 
-let mk_bn_mod_exp_safe #t len exp_check bn_mod_exp n a bBits b res =
+let mk_bn_mod_exp_safe #t len exp_check bn_mod_exp output n a b b_bits =
   let h0 = ST.get () in
-  let is_valid_m = exp_check n a bBits b in
+  let is_valid_m = exp_check n a b_bits b in
   let nBits = size (bits t) *! BB.unsafe_size_from_limb (BL.bn_get_top_index len n) in
 
   if BB.unsafe_bool_of_limb is_valid_m then begin
     SL.bn_low_bound_bits_lemma #t #(v len) (as_seq h0 n);
-    bn_mod_exp nBits n a bBits b res end
+    bn_mod_exp nBits n a b_bits b output end
   else
-    memset res (uint #t 0) len;
+    memset output (uint #t 0) len;
   BB.unsafe_bool_of_limb is_valid_m
 
 
 inline_for_extraction noextract
 let bn_mod_inv_prime_safe_st (t:limb_t) (len:BN.meta_len t) =
-    n:lbignum t len
-  -> a:lbignum t len
-  -> res:lbignum t len ->
+    output:lbignum t len
+  -> n:lbignum t len
+  -> a:lbignum t len ->
   Stack bool
   (requires fun h -> FStar.Math.Euclid.is_prime (bn_v h n) /\
-    live h n /\ live h a /\ live h res /\
-    disjoint res n /\ disjoint res a /\ disjoint n a)
-  (ensures  fun h0 r h1 -> modifies (loc res) h0 h1 /\
+    live h n /\ live h a /\ live h output /\
+    disjoint output n /\ disjoint output a /\ disjoint n a)
+  (ensures  fun h0 r h1 -> modifies (loc output) h0 h1 /\
     r == BB.unsafe_bool_of_limb (SI.bn_check_mod_inv_prime (as_seq h0 n) (as_seq h0 a)) /\
-   (r ==> bn_v h1 res * bn_v h0 a % bn_v h0 n = 1))
+   (r ==> bn_v h1 output * bn_v h0 a % bn_v h0 n = 1))
 
 
 inline_for_extraction noextract
@@ -214,33 +217,33 @@ val mk_bn_mod_inv_prime_safe:
   -> bn_mod_exp:BE.bn_mod_exp_st t len ->
   bn_mod_inv_prime_safe_st t len
 
-let mk_bn_mod_inv_prime_safe #t len bn_mod_exp n a res =
+let mk_bn_mod_inv_prime_safe #t len bn_mod_exp output n a =
   let h0 = ST.get () in
   let is_valid_m = BI.bn_check_mod_inv_prime #t len n a in
   let nBits = size (bits t) *! BB.unsafe_size_from_limb (BL.bn_get_top_index len n) in
 
   if BB.unsafe_bool_of_limb is_valid_m then begin
     SL.bn_low_bound_bits_lemma #t #(v len) (as_seq h0 n);
-    BI.mk_bn_mod_inv_prime len bn_mod_exp nBits n a res end
+    BI.mk_bn_mod_inv_prime len bn_mod_exp nBits n a output end
   else
-    memset res (uint #t 0) len;
+    memset output (uint #t 0) len;
   BB.unsafe_bool_of_limb is_valid_m
 
 
 inline_for_extraction noextract
 let bn_mod_slow_ctx_st (t:limb_t) (len:BN.meta_len t) =
-    k:MA.pbn_mont_ctx t
-  -> a:lbignum t (len +! len)
-  -> res:lbignum t len ->
+    ctx:MA.pbn_mont_ctx t
+  -> output:lbignum t len
+  -> a:lbignum t (len +! len) ->
   Stack unit
   (requires fun h ->
-    (B.deref h k).MA.len == len /\
-    MA.pbn_mont_ctx_inv h k /\
+    (B.deref h ctx).MA.len == len /\
+    MA.pbn_mont_ctx_inv h ctx /\
 
-    live h a /\ live h res /\ disjoint res a /\
-    B.(loc_disjoint (MA.footprint h k) (loc_buffer (res <: buffer (limb t)))))
-  (ensures  fun h0 _ h1 -> modifies (loc res) h0 h1 /\
-    bn_v h1 res == bn_v h0 a % MA.bn_v_n h0 k)
+    live h a /\ live h output /\ disjoint output a /\
+    B.(loc_disjoint (MA.footprint h ctx) (loc_buffer (output <: buffer (limb t)))))
+  (ensures  fun h0 _ h1 -> modifies (loc output) h0 h1 /\
+    bn_v h1 output == bn_v h0 a % MA.bn_v_n h0 ctx)
 
 
 inline_for_extraction noextract
@@ -250,33 +253,34 @@ val bn_mod_ctx:
   -> bn_mod_slow_precomp:BR.bn_mod_slow_precomp_st t len ->
   bn_mod_slow_ctx_st t len
 
-let bn_mod_ctx #t len bn_mod_slow_precomp k a res =
+let bn_mod_ctx #t len bn_mod_slow_precomp ctx output a =
   let open LowStar.BufferOps in
-  let k1 = !*k in
-  bn_mod_slow_precomp k1.MA.n k1.MA.mu k1.MA.r2 a res
+  let k = !*ctx in
+  bn_mod_slow_precomp k.MA.n k.MA.mu k.MA.r2 a output
 
 
 inline_for_extraction noextract
 let bn_mod_exp_ctx_st (t:limb_t) (len:BN.meta_len t) =
-    k:MA.pbn_mont_ctx t
+    ctx:MA.pbn_mont_ctx t
+  -> output:lbignum t len
   -> a:lbignum t len
-  -> bBits:size_t
-  -> b:lbignum t (blocks0 bBits (size (bits t)))
-  -> res:lbignum t len ->
+  -> #l:Ghost.erased size_t
+  -> b:lbignum t (blocks0 l (size (bits t)))
+  -> b_bits:size_t{b_bits = Ghost.reveal l} ->
   Stack unit
   (requires fun h ->
-    (B.deref h k).MA.len == len /\
-    MA.pbn_mont_ctx_inv h k /\
-    bn_v h a < MA.bn_v_n h k /\
-    bn_v h b < pow2 (v bBits) /\
+    (B.deref h ctx).MA.len == len /\
+    MA.pbn_mont_ctx_inv h ctx /\
+    bn_v h a < MA.bn_v_n h ctx /\
+    bn_v h b < pow2 (v b_bits) /\
 
-    live h a /\ live h b /\ live h res /\
-    disjoint res a /\ disjoint res b /\
-    B.(loc_disjoint (MA.footprint h k) (loc_buffer (a <: buffer (limb t)))) /\
-    B.(loc_disjoint (MA.footprint h k) (loc_buffer (res <: buffer (limb t)))))
-  (ensures  fun h0 _ h1 -> modifies (loc res) h0 h1 /\
-    SE.bn_mod_exp_post (as_seq #MUT #(limb t) h0 (B.deref h0 k).MA.n)
-      (as_seq h0 a) (v bBits) (as_seq h0 b) (as_seq h1 res))
+    live h a /\ live h b /\ live h output /\
+    disjoint output a /\ disjoint output b /\
+    B.(loc_disjoint (MA.footprint h ctx) (loc_buffer (a <: buffer (limb t)))) /\
+    B.(loc_disjoint (MA.footprint h ctx) (loc_buffer (output <: buffer (limb t)))))
+  (ensures  fun h0 _ h1 -> modifies (loc output) h0 h1 /\
+    SE.bn_mod_exp_post (as_seq #MUT #(limb t) h0 (B.deref h0 ctx).MA.n)
+      (as_seq h0 a) (v b_bits) (as_seq h0 b) (as_seq h1 output))
 
 
 inline_for_extraction noextract
@@ -286,29 +290,29 @@ val mk_bn_mod_exp_ctx:
   -> bn_mod_exp_precomp:BE.bn_mod_exp_precomp_st t len ->
   bn_mod_exp_ctx_st t len
 
-let mk_bn_mod_exp_ctx #t len bn_mod_exp_precomp k a bBits b res =
+let mk_bn_mod_exp_ctx #t len bn_mod_exp_precomp ctx output a b b_bits =
   let open LowStar.BufferOps in
-  let k1 = !*k in
-  bn_mod_exp_precomp k1.MA.n k1.MA.mu k1.MA.r2 a bBits b res
+  let k = !*ctx in
+  bn_mod_exp_precomp k.MA.n k.MA.mu k.MA.r2 a b_bits b output
 
 
 inline_for_extraction noextract
 let bn_mod_inv_prime_ctx_st (t:limb_t) (len:BN.meta_len t) =
-    k:MA.pbn_mont_ctx t
-  -> a:lbignum t len
-  -> res:lbignum t len ->
+    ctx:MA.pbn_mont_ctx t
+  -> output:lbignum t len
+  -> a:lbignum t len ->
   Stack unit
   (requires fun h ->
-    (B.deref h k).MA.len == len /\
-    MA.pbn_mont_ctx_inv h k /\
-    0 < bn_v h a /\ bn_v h a < MA.bn_v_n h k /\
-    FStar.Math.Euclid.is_prime (MA.bn_v_n h k) /\
+    (B.deref h ctx).MA.len == len /\
+    MA.pbn_mont_ctx_inv h ctx /\
+    0 < bn_v h a /\ bn_v h a < MA.bn_v_n h ctx /\
+    FStar.Math.Euclid.is_prime (MA.bn_v_n h ctx) /\
 
-    live h a /\ live h res /\ disjoint res a /\
-    B.(loc_disjoint (MA.footprint h k) (loc_buffer (a <: buffer (limb t)))) /\
-    B.(loc_disjoint (MA.footprint h k) (loc_buffer (res <: buffer (limb t)))))
-  (ensures  fun h0 r h1 -> modifies (loc res) h0 h1 /\
-    bn_v h1 res * bn_v h0 a % MA.bn_v_n h0 k = 1)
+    live h a /\ live h output /\ disjoint output a /\
+    B.(loc_disjoint (MA.footprint h ctx) (loc_buffer (a <: buffer (limb t)))) /\
+    B.(loc_disjoint (MA.footprint h ctx) (loc_buffer (output <: buffer (limb t)))))
+  (ensures  fun h0 r h1 -> modifies (loc output) h0 h1 /\
+    bn_v h1 output * bn_v h0 a % MA.bn_v_n h0 ctx = 1)
 
 
 inline_for_extraction noextract
@@ -318,7 +322,7 @@ val mk_bn_mod_inv_prime_ctx:
   -> bn_mod_inv_precomp:BI.bn_mod_inv_prime_precomp_st t len ->
   bn_mod_inv_prime_ctx_st t len
 
-let mk_bn_mod_inv_prime_ctx #t len bn_mod_inv_precomp k a res =
+let mk_bn_mod_inv_prime_ctx #t len bn_mod_inv_precomp ctx output a =
   let open LowStar.BufferOps in
-  let k1 = !*k in
-  bn_mod_inv_precomp k1.MA.n k1.MA.mu k1.MA.r2 a res
+  let k = !*ctx in
+  bn_mod_inv_precomp k.MA.n k.MA.mu k.MA.r2 a output

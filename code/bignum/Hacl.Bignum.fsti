@@ -49,15 +49,15 @@ val bn_sub1:
 
 inline_for_extraction noextract
 let bn_add_eq_len_st (t:limb_t) (len:size_t) =
-     a:lbignum t len
-  -> b:lbignum t len
-  -> res:lbignum t len ->
+    output:lbignum t len
+  -> a:lbignum t len
+  -> b:lbignum t len ->
   Stack (carry t)
   (requires fun h ->
-    live h a /\ live h b /\ live h res /\
-    eq_or_disjoint a b /\ eq_or_disjoint a res /\ eq_or_disjoint b res)
-  (ensures  fun h0 c_out h1 -> modifies (loc res) h0 h1 /\
-    (c_out, as_seq h1 res) == S.bn_add (as_seq h0 a) (as_seq h0 b))
+    live h a /\ live h b /\ live h output /\
+    eq_or_disjoint a b /\ eq_or_disjoint a output /\ eq_or_disjoint b output)
+  (ensures  fun h0 c_out h1 -> modifies (loc output) h0 h1 /\
+    (c_out, as_seq h1 output) == S.bn_add (as_seq h0 a) (as_seq h0 b))
 
 
 inline_for_extraction noextract
@@ -66,15 +66,15 @@ val bn_add_eq_len: #t:limb_t -> len:size_t -> bn_add_eq_len_st t len
 
 inline_for_extraction noextract
 let bn_sub_eq_len_st (t:limb_t) (len:size_t) =
-     a:lbignum t len
-  -> b:lbignum t len
-  -> res:lbignum t len ->
+    output:lbignum t len
+  -> a:lbignum t len
+  -> b:lbignum t len ->
   Stack (carry t)
   (requires fun h ->
-    live h a /\ live h b /\ live h res /\
-    eq_or_disjoint a b /\ eq_or_disjoint a res /\ eq_or_disjoint b res)
-  (ensures  fun h0 c_out h1 -> modifies (loc res) h0 h1 /\
-   (c_out, as_seq h1 res) == S.bn_sub (as_seq h0 a) (as_seq h0 b))
+    live h a /\ live h b /\ live h output /\
+    eq_or_disjoint a b /\ eq_or_disjoint a output /\ eq_or_disjoint b output)
+  (ensures  fun h0 c_out h1 -> modifies (loc output) h0 h1 /\
+   (c_out, as_seq h1 output) == S.bn_sub (as_seq h0 a) (as_seq h0 b))
 
 
 inline_for_extraction noextract
@@ -134,17 +134,17 @@ val bn_reduce_once:
 
 inline_for_extraction noextract
 let bn_add_mod_n_st (t:limb_t) (len:size_t{v len > 0}) =
-    n:lbignum t len
+    output:lbignum t len
+  -> n:lbignum t len
   -> a:lbignum t len
-  -> b:lbignum t len
-  -> res:lbignum t len ->
+  -> b:lbignum t len ->
   Stack unit
   (requires fun h ->
-    live h n /\ live h a /\ live h b /\ live h res /\
-    disjoint n a /\ disjoint n b /\ disjoint n res /\
-    eq_or_disjoint a b /\ eq_or_disjoint a res /\ eq_or_disjoint b res)
-  (ensures  fun h0 _ h1 -> modifies (loc res) h0 h1 /\
-    as_seq h1 res == S.bn_add_mod_n (as_seq h0 n) (as_seq h0 a) (as_seq h0 b))
+    live h n /\ live h a /\ live h b /\ live h output /\
+    disjoint n a /\ disjoint n b /\ disjoint n output /\
+    eq_or_disjoint a b /\ eq_or_disjoint a output /\ eq_or_disjoint b output)
+  (ensures  fun h0 _ h1 -> modifies (loc output) h0 h1 /\
+    as_seq h1 output == S.bn_add_mod_n (as_seq h0 n) (as_seq h0 a) (as_seq h0 b))
 
 
 inline_for_extraction noextract
@@ -153,17 +153,17 @@ val bn_add_mod_n: #t:limb_t -> len:size_t{v len > 0} -> bn_add_mod_n_st t len
 
 inline_for_extraction noextract
 let bn_sub_mod_n_st (t:limb_t) (len:size_t{v len > 0}) =
-    n:lbignum t len
+    output:lbignum t len
+  -> n:lbignum t len
   -> a:lbignum t len
-  -> b:lbignum t len
-  -> res:lbignum t len ->
+  -> b:lbignum t len ->
   Stack unit
   (requires fun h ->
-    live h n /\ live h a /\ live h b /\ live h res /\
-    disjoint n a /\ disjoint n b /\ disjoint n res /\
-    eq_or_disjoint a b /\ eq_or_disjoint a res /\ eq_or_disjoint b res)
-  (ensures  fun h0 _ h1 -> modifies (loc res) h0 h1 /\
-    as_seq h1 res == S.bn_sub_mod_n (as_seq h0 n) (as_seq h0 a) (as_seq h0 b))
+    live h n /\ live h a /\ live h b /\ live h output /\
+    disjoint n a /\ disjoint n b /\ disjoint n output /\
+    eq_or_disjoint a b /\ eq_or_disjoint a output /\ eq_or_disjoint b output)
+  (ensures  fun h0 _ h1 -> modifies (loc output) h0 h1 /\
+    as_seq h1 output == S.bn_sub_mod_n (as_seq h0 n) (as_seq h0 a) (as_seq h0 b))
 
 
 inline_for_extraction noextract
@@ -185,23 +185,23 @@ val bn_mul1:
 
 
 inline_for_extraction noextract
-let bn_karatsuba_mul_st (t:limb_t) (len:size_t{0 < v len /\ 4 * v len <= max_size_t}) (a:lbignum t len) =
-    b:lbignum t len
-  -> res:lbignum t (len +! len) ->
+let bn_karatsuba_mul_st (t:limb_t) (len:size_t{0 < v len /\ 4 * v len <= max_size_t}) =
+    output:lbignum t (len +! len)
+  -> a:lbignum t len
+  -> b:lbignum t len ->
   Stack unit
   (requires fun h ->
-    live h a /\ live h b /\ live h res /\
-    disjoint res a /\ disjoint res b /\ eq_or_disjoint a b)
-  (ensures  fun h0 _ h1 -> modifies (loc res) h0 h1 /\
-    as_seq h1 res == S.bn_mul (as_seq h0 a) (as_seq h0 b))
+    live h a /\ live h b /\ live h output /\
+    disjoint output a /\ disjoint output b /\ eq_or_disjoint a b)
+  (ensures  fun h0 _ h1 -> modifies (loc output) h0 h1 /\
+    as_seq h1 output == S.bn_mul (as_seq h0 a) (as_seq h0 b))
 
 
 inline_for_extraction noextract
 val bn_karatsuba_mul:
     #t:limb_t
-  -> len:size_t{0 < v len /\ 4 * v len <= max_size_t}
-  -> a:lbignum t len ->
-  bn_karatsuba_mul_st t len a
+  -> len:size_t{0 < v len /\ 4 * v len <= max_size_t} ->
+  bn_karatsuba_mul_st t len
 
 
 inline_for_extraction noextract
@@ -226,20 +226,20 @@ val bn_mul:
 
 
 inline_for_extraction noextract
-let bn_karatsuba_sqr_st (t:limb_t) (len:size_t{0 < v len /\ 4 * v len <= max_size_t}) (a:lbignum t len) =
-  res:lbignum t (len +! len) ->
+let bn_karatsuba_sqr_st (t:limb_t) (len:size_t{0 < v len /\ 4 * v len <= max_size_t}) =
+    output:lbignum t (len +! len)
+  -> a:lbignum t len ->
   Stack unit
-  (requires fun h -> live h a /\ live h res /\ disjoint res a)
-  (ensures  fun h0 _ h1 -> modifies (loc res) h0 h1 /\
-    as_seq h1 res == S.bn_mul (as_seq h0 a) (as_seq h0 a))
+  (requires fun h -> live h a /\ live h output /\ disjoint output a)
+  (ensures  fun h0 _ h1 -> modifies (loc output) h0 h1 /\
+    as_seq h1 output == S.bn_mul (as_seq h0 a) (as_seq h0 a))
 
 
 inline_for_extraction noextract
 val bn_karatsuba_sqr:
     #t:limb_t
-  -> len:size_t{0 < v len /\ 4 * v len <= max_size_t}
-  -> a:lbignum t len ->
-  bn_karatsuba_sqr_st t len a
+  -> len:size_t{0 < v len /\ 4 * v len <= max_size_t} ->
+  bn_karatsuba_sqr_st t len
 
 
 inline_for_extraction noextract
@@ -383,8 +383,8 @@ class bn (t:limb_t) = {
   sub: bn_sub_eq_len_st t len;
   add_mod_n: bn_add_mod_n_st t len;
   sub_mod_n: bn_sub_mod_n_st t len;
-  mul: a:lbignum t len -> bn_karatsuba_mul_st t len a;
-  sqr: a:lbignum t len -> bn_karatsuba_sqr_st t len a;
+  mul: bn_karatsuba_mul_st t len;
+  sqr:  bn_karatsuba_sqr_st t len;
 }
 
 

@@ -38,7 +38,7 @@ let add1_ out f1 f2 =
 [@CInline]
 let fadd_ out f1 f2 =
   let h0 = ST.get () in
-  let c0 = BN.bn_add_eq_len 4ul f1 f2 out in
+  let c0 = BN.bn_add_eq_len 4ul out f1 f2 in
   let c = BN.bn_add1 4ul out (c0 *. u64 38) out in
   out.(0ul) <- out.(0ul) +. c *. u64 38;
   let h1 = ST.get () in
@@ -51,7 +51,7 @@ let fadd_ out f1 f2 =
 [@CInline]
 let fsub_ out f1 f2 =
   let h0 = ST.get () in
-  let c0 = BN.bn_sub_eq_len 4ul f1 f2 out in
+  let c0 = BN.bn_sub_eq_len 4ul out f1 f2 in
   let c = BN.bn_sub1 4ul out (c0 *! u64 38) out in
   out.(0ul) <- out.(0ul) -. c *. u64 38;
   let h1 = ST.get () in

@@ -65,15 +65,15 @@ let bn_field_init #t len precomp_r2 r n =
   B.malloc r res 1ul
 
 
-let bn_field_free #t k =
+let bn_field_free #t ctx =
   let open LowStar.BufferOps in
-  let k1 = !*k in
-  let n : buffer (limb t) = k1.n in
-  let r2 : buffer (limb t) = k1.r2 in
+  let k = !*ctx in
+  let n : buffer (limb t) = k.n in
+  let r2 : buffer (limb t) = k.r2 in
   B.free n;
   B.freeable_disjoint n r2;
   B.free r2;
-  B.free k
+  B.free ctx
 
 
 let bn_to_field #t km k a aM =
@@ -98,7 +98,7 @@ let bn_field_add #t km k aM bM cM =
   let open LowStar.BufferOps in
   let k1 = !*k in
   let h0 = ST.get () in
-  km.BM.bn.BN.add_mod_n k1.n aM bM cM;
+  km.BM.bn.BN.add_mod_n cM k1.n aM bM;
   let h1 = ST.get () in
   assert (as_seq h1 cM == S.bn_field_add (as_pctx h0 k) (as_seq h0 aM) (as_seq h0 bM))
 
@@ -107,7 +107,7 @@ let bn_field_sub #t km k aM bM cM =
   let open LowStar.BufferOps in
   let k1 = !*k in
   let h0 = ST.get () in
-  km.BM.bn.BN.sub_mod_n k1.n aM bM cM;
+  km.BM.bn.BN.sub_mod_n cM k1.n aM bM;
   let h1 = ST.get () in
   assert (as_seq h1 cM == S.bn_field_sub (as_pctx h0 k) (as_seq h0 aM) (as_seq h0 bM))
 

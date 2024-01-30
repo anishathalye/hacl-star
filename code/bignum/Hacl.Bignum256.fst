@@ -23,12 +23,9 @@ let add_mod: BN.bn_add_mod_n_st t_limbs n_limbs =
 let sub_mod: BN.bn_sub_mod_n_st t_limbs n_limbs =
   BN.bn_sub_mod_n n_limbs
 
-let mul (a:lbignum t_limbs n_limbs) : BN.bn_karatsuba_mul_st t_limbs n_limbs a =
-  BN.bn_mul n_limbs n_limbs a
+let mul output a b = BN.bn_mul n_limbs n_limbs a b output
 
-let sqr (a:lbignum t_limbs n_limbs) : BN.bn_karatsuba_sqr_st t_limbs n_limbs a =
-  BN.bn_sqr n_limbs a
-  //BN.bn_mul n_limbs n_limbs a a
+let sqr output a = BN.bn_sqr n_limbs a output
 
 inline_for_extraction noextract
 instance bn_inst: BN.bn t_limbs = {
@@ -109,8 +106,8 @@ instance almost_mont_inst: AM.almost_mont t_limbs = {
 let bn_slow_precomp : BR.bn_mod_slow_precomp_st t_limbs n_limbs =
   BR.bn_mod_slow_precomp almost_mont_inst
 
-let mod n a res =
-  BS.mk_bn_mod_slow_safe n_limbs (BR.mk_bn_mod_slow n_limbs precompr2 bn_slow_precomp) n a res
+let mod =
+  BS.mk_bn_mod_slow_safe n_limbs (BR.mk_bn_mod_slow n_limbs precompr2 bn_slow_precomp)
 
 let exp_check: BE.bn_check_mod_exp_st t_limbs n_limbs =
   BE.bn_check_mod_exp n_limbs
@@ -141,24 +138,22 @@ let mod_exp_consttime = BS.mk_bn_mod_exp_safe n_limbs exp_check exp_consttime
 
 let mod_inv_prime_vartime = BS.mk_bn_mod_inv_prime_safe n_limbs exp_vartime
 
-let mont_ctx_init r n =
-  MA.bn_field_init n_limbs precompr2 r n
+let mont_ctx_init r n = MA.bn_field_init n_limbs precompr2 r n
 
-let mont_ctx_free k =
-  MA.bn_field_free k
+let mont_ctx_free = MA.bn_field_free
 
-let mod_precomp k a res =
-  BS.bn_mod_ctx n_limbs bn_slow_precomp k a res
+let mod_precomp =
+  BS.bn_mod_ctx n_limbs bn_slow_precomp
 
-let mod_exp_vartime_precomp k a bBits b res =
-  BS.mk_bn_mod_exp_ctx n_limbs exp_vartime_precomp k a bBits b res
+let mod_exp_vartime_precomp =
+  BS.mk_bn_mod_exp_ctx n_limbs exp_vartime_precomp
 
-let mod_exp_consttime_precomp k a bBits b res =
-  BS.mk_bn_mod_exp_ctx n_limbs exp_consttime_precomp k a bBits b res
+let mod_exp_consttime_precomp =
+  BS.mk_bn_mod_exp_ctx n_limbs exp_consttime_precomp
 
-let mod_inv_prime_vartime_precomp k a res =
+let mod_inv_prime_vartime_precomp =
   BS.mk_bn_mod_inv_prime_ctx n_limbs
-    (BI.mk_bn_mod_inv_prime_precomp n_limbs exp_vartime_precomp) k a res
+    (BI.mk_bn_mod_inv_prime_precomp n_limbs exp_vartime_precomp)
 
 let new_bn_from_bytes_be = BS.new_bn_from_bytes_be
 

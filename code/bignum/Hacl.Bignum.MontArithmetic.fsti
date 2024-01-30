@@ -164,13 +164,13 @@ val bn_field_init:
 
 
 inline_for_extraction noextract
-let bn_field_free_st (t:limb_t) = k:pbn_mont_ctx t ->
+let bn_field_free_st (t:limb_t) = ctx:pbn_mont_ctx t ->
   ST unit
   (requires fun h ->
-    freeable h k /\
-    pbn_mont_ctx_inv h k)
+    freeable h ctx /\
+    pbn_mont_ctx_inv h ctx)
   (ensures  fun h0 _ h1 ->
-    B.(modifies (footprint h0 k) h0 h1))
+    B.(modifies (footprint h0 ctx) h0 h1))
 
 
 inline_for_extraction noextract

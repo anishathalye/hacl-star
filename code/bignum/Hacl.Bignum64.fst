@@ -42,40 +42,39 @@ let sqr len a res =
 let bn_slow_precomp (len:BN.meta_len t_limbs) : BR.bn_mod_slow_precomp_st t_limbs len =
   BR.bn_mod_slow_precomp (kam len)
 
-let mod len n a res =
-  BS.mk_bn_mod_slow_safe len (BR.mk_bn_mod_slow len (kam len).AM.precomp (bn_slow_precomp len)) n a res
+let mod len =
+  BS.mk_bn_mod_slow_safe len (BR.mk_bn_mod_slow len (kam len).AM.precomp (bn_slow_precomp len))
 
-let mod_exp_vartime len n a bBits b res =
-  BS.mk_bn_mod_exp_safe len (ke len).BE.exp_check (ke len).BE.exp_vt n a bBits b res
+let mod_exp_vartime len =
+  BS.mk_bn_mod_exp_safe len (ke len).BE.exp_check (ke len).BE.exp_vt
 
-let mod_exp_consttime len n a bBits b res =
-  BS.mk_bn_mod_exp_safe len (ke len).BE.exp_check (ke len).BE.exp_ct n a bBits b res
+let mod_exp_consttime len =
+  BS.mk_bn_mod_exp_safe len (ke len).BE.exp_check (ke len).BE.exp_ct
 
-let mod_inv_prime_vartime len n a res =
-  BS.mk_bn_mod_inv_prime_safe len (ke len).BE.exp_vt n a res
+let mod_inv_prime_vartime len =
+  BS.mk_bn_mod_inv_prime_safe len (ke len).BE.exp_vt
 
 let mont_ctx_init len r n =
   MA.bn_field_init len (ke len).BE.precompr2 r n
 
-let mont_ctx_free k =
-  MA.bn_field_free k
+let mont_ctx_free = MA.bn_field_free
 
-let mod_precomp len k a res =
-  let len1 = MA.bn_field_get_len k in
-  BS.bn_mod_ctx len (bn_slow_precomp len1) k a res
+let mod_precomp len ctx output a =
+  let len1 = MA.bn_field_get_len ctx in
+  BS.bn_mod_ctx len (bn_slow_precomp len1) ctx output a
 
-let mod_exp_vartime_precomp len k a bBits b res =
-  let len1 = MA.bn_field_get_len k in
-  BS.mk_bn_mod_exp_ctx len (ke len1).BE.exp_vt_precomp k a bBits b res
+let mod_exp_vartime_precomp len ctx output a b b_bits =
+  let len1 = MA.bn_field_get_len ctx in
+  BS.mk_bn_mod_exp_ctx len (ke len1).BE.exp_vt_precomp ctx output a b b_bits
 
-let mod_exp_consttime_precomp len k a bBits b res =
-  let len1 = MA.bn_field_get_len k in
-  BS.mk_bn_mod_exp_ctx len (ke len1).BE.exp_ct_precomp k a bBits b res
+let mod_exp_consttime_precomp len ctx output a b b_bits =
+  let len1 = MA.bn_field_get_len ctx in
+  BS.mk_bn_mod_exp_ctx len (ke len1).BE.exp_ct_precomp ctx output a b b_bits
 
-let mod_inv_prime_vartime_precomp len k a res =
-  let len1 = MA.bn_field_get_len k in
+let mod_inv_prime_vartime_precomp len ctx output a =
+  let len1 = MA.bn_field_get_len ctx in
   BS.mk_bn_mod_inv_prime_ctx len
-    (BI.mk_bn_mod_inv_prime_precomp len1 (ke len1).BE.exp_vt_precomp) k a res
+    (BI.mk_bn_mod_inv_prime_precomp len1 (ke len1).BE.exp_vt_precomp) ctx output a
 
 let new_bn_from_bytes_be r len b =
   BS.new_bn_from_bytes_be r len b

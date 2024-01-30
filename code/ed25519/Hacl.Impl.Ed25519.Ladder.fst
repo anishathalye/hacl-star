@@ -60,7 +60,7 @@ val convert_scalar: scalar:lbuffer uint8 32ul -> bscalar:lbuffer uint64 4ul ->
 let convert_scalar scalar bscalar =
   let h0 = ST.get () in
   Hacl.Spec.Bignum.Convert.bn_from_bytes_le_lemma #U64 32 (as_seq h0 scalar);
-  Hacl.Bignum.Convert.mk_bn_from_bytes_le true 32ul scalar bscalar
+  Hacl.Bignum.Convert.mk_bn_from_bytes_le true 32ul bscalar scalar
 
 
 inline_for_extraction noextract

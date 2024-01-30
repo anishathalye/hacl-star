@@ -47,7 +47,7 @@ let bn_precomp_r2_mod_n #t k nBits n res =
   loop1 h0 (2ul *! size (bits t) *! len -! nBits) res spec
   (fun i ->
     Loops.unfold_repeati (2 * bits t * v len - v nBits) (spec h0) (as_seq h0 res) (v i);
-    BN.add_mod_n n res res res
+    BN.add_mod_n res n res res
   )
 
 
@@ -139,7 +139,7 @@ let bn_to_mont #t k mont_reduction n nInv r2 a aM =
   [@inline_let] let len = k.BN.len in
   push_frame ();
   let c = create (len +! len) (uint #t 0) in
-  BN.mul a r2 c;
+  BN.mul c a r2;
   mont_reduction n nInv c aM;
   pop_frame ()
 
@@ -159,7 +159,7 @@ let bn_mont_mul #t k mont_reduction n nInv_u64 aM bM resM =
   let c = create (len +! len) (uint #t 0) in
   // In case you need to debug the type class projection, this is the explicit
   // syntax without referring to the implicitly-defined projector.
-  k.BN.mul aM bM c;
+  k.BN.mul c aM bM;
   mont_reduction n nInv_u64 c resM;
   pop_frame ()
 
@@ -168,7 +168,7 @@ let bn_mont_sqr #t k mont_reduction n nInv_u64 aM resM =
   [@inline_let] let len = k.BN.len in
   push_frame ();
   let c = create (len +! len) (uint #t 0) in
-  k.BN.sqr aM c;
+  k.BN.sqr c aM;
   mont_reduction n nInv_u64 c resM;
   pop_frame ()
 
