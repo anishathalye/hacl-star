@@ -23,12 +23,9 @@ let add_mod: BN.bn_add_mod_n_st t_limbs n_limbs =
 let sub_mod: BN.bn_sub_mod_n_st t_limbs n_limbs =
   BN.bn_sub_mod_n n_limbs
 
-let mul (a:lbignum t_limbs n_limbs) : BN.bn_karatsuba_mul_st t_limbs n_limbs a =
-  BN.bn_mul n_limbs n_limbs a
+let mul output a b = BN.bn_mul n_limbs n_limbs a b output
 
-let sqr (a:lbignum t_limbs n_limbs) : BN.bn_karatsuba_sqr_st t_limbs n_limbs a =
-  BN.bn_sqr n_limbs a
-  //BN.bn_mul n_limbs n_limbs a a
+let sqr output a = BN.bn_sqr n_limbs a output
 
 inline_for_extraction noextract
 instance bn_inst: BN.bn t_limbs = {

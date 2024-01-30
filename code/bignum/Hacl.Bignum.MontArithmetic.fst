@@ -98,7 +98,7 @@ let bn_field_add #t km k aM bM cM =
   let open LowStar.BufferOps in
   let k1 = !*k in
   let h0 = ST.get () in
-  km.BM.bn.BN.add_mod_n k1.n aM bM cM;
+  km.BM.bn.BN.add_mod_n cM k1.n aM bM;
   let h1 = ST.get () in
   assert (as_seq h1 cM == S.bn_field_add (as_pctx h0 k) (as_seq h0 aM) (as_seq h0 bM))
 
@@ -107,7 +107,7 @@ let bn_field_sub #t km k aM bM cM =
   let open LowStar.BufferOps in
   let k1 = !*k in
   let h0 = ST.get () in
-  km.BM.bn.BN.sub_mod_n k1.n aM bM cM;
+  km.BM.bn.BN.sub_mod_n cM k1.n aM bM;
   let h1 = ST.get () in
   assert (as_seq h1 cM == S.bn_field_sub (as_pctx h0 k) (as_seq h0 aM) (as_seq h0 bM))
 

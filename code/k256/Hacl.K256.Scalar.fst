@@ -45,11 +45,11 @@ let add_mod4: BN.bn_add_mod_n_st U64 qnlimb =
 let sub_mod4: BN.bn_sub_mod_n_st U64 qnlimb =
   BN.bn_sub_mod_n qnlimb
 
-let mul4 (a:BD.lbignum U64 qnlimb) : BN.bn_karatsuba_mul_st U64 qnlimb a =
-  BN.bn_mul qnlimb qnlimb a
+let mul4 : BN.bn_karatsuba_mul_st U64 qnlimb =
+  fun output a b -> BN.bn_mul qnlimb qnlimb a b output
 
-let sqr4 (a:BD.lbignum U64 qnlimb) : BN.bn_karatsuba_sqr_st U64 qnlimb a =
-  BN.bn_sqr qnlimb a
+let sqr4 : BN.bn_karatsuba_sqr_st U64 qnlimb =
+  fun output a -> BN.bn_sqr qnlimb a output
 
 inline_for_extraction noextract
 instance kn: BN.bn U64 = {
@@ -195,7 +195,7 @@ let modq_short out a =
   make_u64_4 tmp (t0,t1,t2,t3);
 
   let h0 = ST.get () in
-  let c = kn.BN.add a tmp out in
+  let c = kn.BN.add out a tmp in
   let mask = u64 0 -. c in
   map2T qnlimb out (BB.mask_select mask) out a;
   KL.mod_short_lseq_lemma (as_seq h0 a);
@@ -226,7 +226,7 @@ let qadd out f1 f2 =
   make_u64_4 n (make_order_k256 ());
 
   let h0 = ST.get () in
-  kn.BN.add_mod_n n f1 f2 out;
+  kn.BN.add_mod_n out n f1 f2;
   SN.bn_add_mod_n_lemma (as_seq h0 n) (as_seq h0 f1) (as_seq h0 f2);
   pop_frame ()
 
@@ -306,7 +306,7 @@ let modq out a =
   assert (Seq.equal (as_seq h0 t01) (LSeq.create2 t0 t1));
   let c0 = modq_before_final t01 a r in
 
-  let c1 = kn.BN.add r tmp out in
+  let c1 = kn.BN.add out r tmp in
   let mask = u64 0 -. (c0 +. c1) in
   map2T qnlimb out (BB.mask_select mask) out r;
 
@@ -320,7 +320,7 @@ let qmul out f1 f2 =
   push_frame ();
   let h0 = ST.get () in
   let tmp = create (2ul *! qnlimb) (u64 0) in
-  kn.BN.mul f1 f2 tmp;
+  kn.BN.mul tmp f1 f2;
   SN.bn_mul_lemma (as_seq h0 f1) (as_seq h0 f2);
 
   modq out tmp;
@@ -332,7 +332,7 @@ let qsqr out f =
   push_frame ();
   let h0 = ST.get () in
   let tmp = create (2ul *! qnlimb) (u64 0) in
-  kn.BN.sqr f tmp;
+  kn.BN.sqr tmp f;
   SN.bn_sqr_lemma (as_seq h0 f);
 
   modq out tmp;
@@ -348,7 +348,7 @@ let qnegate_conditional_vartime f is_negate =
 
   if is_negate then begin
     let h0 = ST.get () in
-    kn.BN.sub_mod_n n zero f f;
+    kn.BN.sub_mod_n f n zero f;
     SN.bn_sub_mod_n_lemma (as_seq h0 n) (as_seq h0 zero) (as_seq h0 f);
     let h1 = ST.get () in
     assert (qas_nat h1 f = (0 - qas_nat h0 f) % S.q);
@@ -401,7 +401,7 @@ let qmul_shift_384 res a b =
   push_frame ();
   let h0 = ST.get () in
   let l = create (2ul *! qnlimb) (u64 0) in
-  kn.BN.mul a b l; // l = a * b
+  kn.BN.mul l a b; // l = a * b
   let res_b_padded = create_qelem () in
   rshift_update_sub res_b_padded l;
   let _ = BN.bn_add1 qnlimb res_b_padded (u64 1) res in

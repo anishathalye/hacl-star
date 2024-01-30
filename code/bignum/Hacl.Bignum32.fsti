@@ -30,23 +30,23 @@ of `len` unsigned 32-bit integers, i.e. uint32_t[len].
 /* Arithmetic functions */
 /************************/\n";
 Comment
-"Write `a + b mod 2 ^ (32 * len)` in `res`.
+"Write `a + b mod 2 ^ (32 * len)` in `output`.
 
   This functions returns the carry.
 
-  The arguments a, b and the outparam res are meant to be `len` limbs in size, i.e. uint32_t[len]"]
+  The arguments a, b and the outparam output are meant to be `len` limbs in size, i.e. uint32_t[len]"]
 val add: len:BN.meta_len t_limbs -> BN.bn_add_eq_len_st t_limbs len
 
-[@@ Comment "Write `a - b mod 2 ^ (32 * len)` in `res`.
+[@@ Comment "Write `a - b mod 2 ^ (32 * len)` in `output`.
 
   This functions returns the carry.
 
-  The arguments a, b and the outparam res are meant to be `len` limbs in size, i.e. uint32_t[len]"]
+  The arguments a, b and the outparam output are meant to be `len` limbs in size, i.e. uint32_t[len]"]
 val sub: len:BN.meta_len t_limbs -> BN.bn_sub_eq_len_st t_limbs len
 
-[@@ Comment "Write `(a + b) mod n` in `res`.
+[@@ Comment "Write `(a + b) mod n` in `output`.
 
-  The arguments a, b, n and the outparam res are meant to be `len` limbs in size, i.e. uint32_t[len].
+  The arguments a, b, n and the outparam output are meant to be `len` limbs in size, i.e. uint32_t[len].
 
   Before calling this function, the caller will need to ensure that the following
   preconditions are observed.
@@ -54,9 +54,9 @@ val sub: len:BN.meta_len t_limbs -> BN.bn_sub_eq_len_st t_limbs len
   • b < n"]
 val add_mod: len:BN.meta_len t_limbs -> BN.bn_add_mod_n_st t_limbs len
 
-[@@ Comment "Write `(a - b) mod n` in `res`.
+[@@ Comment "Write `(a - b) mod n` in `output`.
 
-  The arguments a, b, n and the outparam res are meant to be `len` limbs in size, i.e. uint32_t[len].
+  The arguments a, b, n and the outparam output are meant to be `len` limbs in size, i.e. uint32_t[len].
 
   Before calling this function, the caller will need to ensure that the following
   preconditions are observed.
@@ -64,22 +64,22 @@ val add_mod: len:BN.meta_len t_limbs -> BN.bn_add_mod_n_st t_limbs len
   • b < n"]
 val sub_mod: len:BN.meta_len t_limbs -> BN.bn_sub_mod_n_st t_limbs len
 
-[@@ Comment "Write `a * b` in `res`.
+[@@ Comment "Write `a * b` in `output`.
 
   The arguments a and b are meant to be `len` limbs in size, i.e. uint32_t[len].
-  The outparam res is meant to be `2*len` limbs in size, i.e. uint32_t[2*len]."]
-val mul: len:BN.meta_len t_limbs -> a:lbignum t_limbs len -> BN.bn_karatsuba_mul_st t_limbs len a
+  The outparam output is meant to be `2*len` limbs in size, i.e. uint32_t[2*len]."]
+val mul: len:BN.meta_len t_limbs -> BN.bn_karatsuba_mul_st t_limbs len
 
-[@@ Comment "Write `a * a` in `res`.
+[@@ Comment "Write `a * a` in `output`.
 
   The argument a is meant to be `len` limbs in size, i.e. uint32_t[len].
-  The outparam res is meant to be `2*len` limbs in size, i.e. uint32_t[2*len]."]
-val sqr: len:BN.meta_len t_limbs -> a:lbignum t_limbs len -> BN.bn_karatsuba_sqr_st t_limbs len a
+  The outparam output is meant to be `2*len` limbs in size, i.e. uint32_t[2*len]."]
+val sqr: len:BN.meta_len t_limbs -> BN.bn_karatsuba_sqr_st t_limbs len
 
-[@@ Comment "Write `a mod n` in `res`.
+[@@ Comment "Write `a mod n` in `output`.
 
   The argument a is meant to be `2*len` limbs in size, i.e. uint32_t[2*len].
-  The argument n and the outparam res are meant to be `len` limbs in size, i.e. uint32_t[len].
+  The argument n and the outparam output are meant to be `len` limbs in size, i.e. uint32_t[len].
 
   The function returns false if any of the following preconditions are violated,
   true otherwise.
@@ -87,9 +87,9 @@ val sqr: len:BN.meta_len t_limbs -> a:lbignum t_limbs len -> BN.bn_karatsuba_sqr
    • n % 2 = 1 "]
 val mod: len:BN.meta_len t_limbs -> BS.bn_mod_slow_safe_st t_limbs len
 
-[@@ Comment "Write `a ^ b mod n` in `res`.
+[@@ Comment "Write `a ^ b mod n` in `output`.
 
-  The arguments a, n and the outparam res are meant to be `len` limbs in size, i.e. uint32_t[len].
+  The arguments a, n and the outparam output are meant to be `len` limbs in size, i.e. uint32_t[len].
 
   The argument b is a bignum of any size, and bBits is an upper bound on the
   number of significant bits of b. A tighter bound results in faster execution
@@ -107,9 +107,9 @@ val mod: len:BN.meta_len t_limbs -> BS.bn_mod_slow_safe_st t_limbs len
    • a < n"]
 val mod_exp_vartime: len:BN.meta_len t_limbs -> BS.bn_mod_exp_safe_st t_limbs len
 
-[@@ Comment "Write `a ^ b mod n` in `res`.
+[@@ Comment "Write `a ^ b mod n` in `output`.
 
-  The arguments a, n and the outparam res are meant to be `len` limbs in size, i.e. uint32_t[len].
+  The arguments a, n and the outparam output are meant to be `len` limbs in size, i.e. uint32_t[len].
 
   The argument b is a bignum of any size, and bBits is an upper bound on the
   number of significant bits of b. A tighter bound results in faster execution
@@ -127,9 +127,9 @@ val mod_exp_vartime: len:BN.meta_len t_limbs -> BS.bn_mod_exp_safe_st t_limbs le
    • a < n"]
 val mod_exp_consttime: len:BN.meta_len t_limbs -> BS.bn_mod_exp_safe_st t_limbs len
 
-[@@ Comment "Write `a ^ (-1) mod n` in `res`.
+[@@ Comment "Write `a ^ (-1) mod n` in `output`.
 
-  The arguments a, n and the outparam res are meant to be `len` limbs in size, i.e. uint32_t[len].
+  The arguments a, n and the outparam output are meant to be `len` limbs in size, i.e. uint32_t[len].
 
   Before calling this function, the caller will need to ensure that the following
   preconditions are observed.
@@ -166,16 +166,16 @@ val mont_ctx_init: len:BN.meta_len t_limbs -> MA.bn_field_init_st t_limbs len
   The argument k is a montgomery context obtained through Hacl_Bignum32_mont_ctx_init."]
 val mont_ctx_free: MA.bn_field_free_st t_limbs
 
-[@@ Comment "Write `a mod n` in `res`.
+[@@ Comment "Write `a mod n` in `output`.
 
   The argument a is meant to be `2*len` limbs in size, i.e. uint32_t[2*len].
-  The outparam res is meant to be `len` limbs in size, i.e. uint32_t[len].
+  The outparam output is meant to be `len` limbs in size, i.e. uint32_t[len].
   The argument k is a montgomery context obtained through Hacl_Bignum32_mont_ctx_init."]
 val mod_precomp: len:Ghost.erased _ -> BS.bn_mod_slow_ctx_st t_limbs len
 
-[@@ Comment "Write `a ^ b mod n` in `res`.
+[@@ Comment "Write `a ^ b mod n` in `output`.
 
-  The arguments a and the outparam res are meant to be `len` limbs in size, i.e. uint32_t[len].
+  The arguments a and the outparam output are meant to be `len` limbs in size, i.e. uint32_t[len].
   The argument k is a montgomery context obtained through Hacl_Bignum32_mont_ctx_init.
 
   The argument b is a bignum of any size, and bBits is an upper bound on the
@@ -192,9 +192,9 @@ val mod_precomp: len:Ghost.erased _ -> BS.bn_mod_slow_ctx_st t_limbs len
   • a < n"]
 val mod_exp_vartime_precomp: len:Ghost.erased _ -> BS.bn_mod_exp_ctx_st t_limbs len
 
-[@@ Comment "Write `a ^ b mod n` in `res`.
+[@@ Comment "Write `a ^ b mod n` in `output`.
 
-  The arguments a and the outparam res are meant to be `len` limbs in size, i.e. uint32_t[len].
+  The arguments a and the outparam output are meant to be `len` limbs in size, i.e. uint32_t[len].
   The argument k is a montgomery context obtained through Hacl_Bignum32_mont_ctx_init.
 
   The argument b is a bignum of any size, and bBits is an upper bound on the
@@ -211,9 +211,9 @@ val mod_exp_vartime_precomp: len:Ghost.erased _ -> BS.bn_mod_exp_ctx_st t_limbs 
   • a < n"]
 val mod_exp_consttime_precomp: len:Ghost.erased _ -> BS.bn_mod_exp_ctx_st t_limbs len
 
-[@@ Comment "Write `a ^ (-1) mod n` in `res`.
+[@@ Comment "Write `a ^ (-1) mod n` in `output`.
 
-  The argument a and the outparam res are meant to be `len` limbs in size, i.e. uint32_t[len].
+  The argument a and the outparam output are meant to be `len` limbs in size, i.e. uint32_t[len].
   The argument k is a montgomery context obtained through Hacl_Bignum32_mont_ctx_init.
 
   Before calling this function, the caller will need to ensure that the following
@@ -253,13 +253,13 @@ val new_bn_from_bytes_le: BS.new_bn_from_bytes_le_st t_limbs
 [@@ Comment "Serialize a bignum into big-endian memory.
 
   The argument b points to a bignum of ⌈len / 4⌉ size.
-  The outparam res points to `len` bytes of valid memory."]
+  The outparam output points to `len` bytes of valid memory."]
 val bn_to_bytes_be: len:_ -> Hacl.Bignum.Convert.bn_to_bytes_be_st t_limbs len
 
 [@@ Comment "Serialize a bignum into little-endian memory.
 
   The argument b points to a bignum of ⌈len / 4⌉ size.
-  The outparam res points to `len` bytes of valid memory."]
+  The outparam output points to `len` bytes of valid memory."]
 val bn_to_bytes_le: len:_ -> Hacl.Bignum.Convert.bn_to_bytes_le_st t_limbs len
 
 [@@ CPrologue
