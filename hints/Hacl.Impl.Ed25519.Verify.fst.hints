@@ -81,7 +81,7 @@
         "typing_tok_Lib.Buffer.MUT@tok"
       ],
       0,
-      "aaa1cd6b9840d1f17082f3d00125f84b"
+      "9b0bb4efd5a31f930e4a65064bc0314e"
     ],
     [
       "Hacl.Impl.Ed25519.Verify.verify_all_valid_hb",
@@ -316,7 +316,7 @@
         "typing_tok_Spec.Hash.Definitions.SHA2_256@tok", "unit_typing"
       ],
       0,
-      "b22f10756c3ee7219512b547e1aedf2a"
+      "8cb0bbae071e7eef83c54bb1dda8a145"
     ],
     [
       "Hacl.Impl.Ed25519.Verify.verify_sb",
@@ -489,7 +489,7 @@
         "typing_tok_Spec.Hash.Definitions.SHA2_384@tok"
       ],
       0,
-      "2594544729114a74b4fba044316757bf"
+      "4f6e91d0de2c540f55c2ed790abb66c9"
     ],
     [
       "Hacl.Impl.Ed25519.Verify.verify_valid_pk_rs",
@@ -590,7 +590,7 @@
         "typing_tok_Spec.Hash.Definitions.SHA2_224@tok"
       ],
       0,
-      "26a7fdcbba649a4c18d4b7dc9c229a77"
+      "24663f37b0d836bfc02f17fb81452ead"
     ],
     [
       "Hacl.Impl.Ed25519.Verify.verify_valid_pk_rs",
@@ -850,7 +850,7 @@
         "typing_tok_Spec.Hash.Definitions.SHA2_224@tok", "unit_typing"
       ],
       0,
-      "d0e0b7b31195a18b30ad0b741e818883"
+      "500cde1d6b3a72e2643518e539a957e0"
     ],
     [
       "Hacl.Impl.Ed25519.Verify.verify_valid_pk",
@@ -881,7 +881,7 @@
         "typing_LowStar.Monotonic.Buffer.len"
       ],
       0,
-      "58a1083b17d067f2812d7d1736148e59"
+      "c636aaa0a6785eb5b3581fef9e8586b3"
     ],
     [
       "Hacl.Impl.Ed25519.Verify.verify_valid_pk",
@@ -1123,7 +1123,7 @@
         "typing_tok_Spec.Hash.Definitions.SHA2_512@tok", "unit_typing"
       ],
       0,
-      "3627d5279dfada02c1e966c01b482609"
+      "3f6eb348266a532b8f4a694acd15bc95"
     ],
     [
       "Hacl.Impl.Ed25519.Verify.verify",
@@ -1186,7 +1186,7 @@
         "typing_tok_Lib.IntTypes.U32@tok"
       ],
       0,
-      "e1729f11ac226b25c5a9d49907e27894"
+      "7f659482e194156dbd2aedabd92c0b48"
     ],
     [
       "Hacl.Impl.Ed25519.Verify.verify",
@@ -1412,7 +1412,7 @@
         "typing_tok_Spec.Hash.Definitions.SHA2_512@tok", "unit_typing"
       ],
       0,
-      "6aa5dc4a56afed0ed89b77b8a0f0e0f0"
+      "e2d80846ffa06c5ed0bd84b551ff368f"
     ]
   ]
 ]

@@ -36,7 +36,7 @@
         "typing_tok_Lib.Buffer.MUT@tok"
       ],
       0,
-      "56866b77048280bc21a3316a9621f2b5"
+      "370cb28684db85d6d0e8823a89161951"
     ],
     [
       "Hacl.Impl.Curve25519.Generic.secret_to_public_st",
@@ -73,7 +73,7 @@
         "typing_tok_Lib.Buffer.MUT@tok"
       ],
       0,
-      "d29ecde54ac5ddc28fe2588b5e036c60"
+      "49f8978817afe22b6eba9a7d9dc036b5"
     ],
     [
       "Hacl.Impl.Curve25519.Generic.ecdh_st",
@@ -138,7 +138,7 @@
         "typing_tok_Lib.IntTypes.U32@tok"
       ],
       0,
-      "f301fb5b9b0de91789f218566f3add0b"
+      "cdb5eb00d40a23add6c3554170b25f70"
     ]
   ]
 ]

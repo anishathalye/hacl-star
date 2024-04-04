@@ -33,7 +33,7 @@
         "typing_tok_Lib.Buffer.MUT@tok"
       ],
       0,
-      "e61f1397c5debbe168fca1845e129efc"
+      "c5b2beda2f86185ea5f3d139256588f8"
     ],
     [
       "Hacl.Impl.P256.DH.ecp256dh_i",
@@ -216,7 +216,7 @@
         "typing_tok_Lib.IntTypes.U64@tok"
       ],
       0,
-      "06d8be8bd13852e6d0bdaaa50f0d91fd"
+      "1963ae51eaaa6630b9d501a117af64de"
     ],
     [
       "Hacl.Impl.P256.DH.ecp256dh_r_",
@@ -250,7 +250,7 @@
         "typing_tok_Lib.Buffer.MUT@tok"
       ],
       0,
-      "5a1f7145ffa08935c864233d7a0e20c7"
+      "85a771f6ccc56654460380372a687a7e"
     ],
     [
       "Hacl.Impl.P256.DH.ecp256dh_r_",
@@ -379,7 +379,7 @@
         "typing_tok_Lib.Buffer.MUT@tok"
       ],
       0,
-      "844087bbb362dac75701d3c9da4c7c2c"
+      "33721beffb88a5b704da0c41df0bee6c"
     ],
     [
       "Hacl.Impl.P256.DH.ecp256dh_r",
@@ -413,7 +413,7 @@
         "typing_tok_Lib.Buffer.MUT@tok"
       ],
       0,
-      "5880a770240c4363819aeb8a9e3a0e8d"
+      "30a59a3c34ef8aa379424033745dc52e"
     ],
     [
       "Hacl.Impl.P256.DH.ecp256dh_r",
@@ -603,7 +603,7 @@
         "typing_tok_Lib.IntTypes.U64@tok"
       ],
       0,
-      "5c669734d4cea711b66596bdae6a57e7"
+      "2cf81e2105ec3f1f72f4d3d4dff925cd"
     ]
   ]
 ]

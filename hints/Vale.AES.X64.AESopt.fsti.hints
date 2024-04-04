@@ -8,7 +8,7 @@
       0,
       [ "@query" ],
       0,
-      "ae22be58099bc1b04cd40f379e7624c5"
+      "0a78d3e6d52c4acecd4490fffdddccff"
     ],
     [
       "Vale.AES.X64.AESopt.aes_reqs_offset",
@@ -17,7 +17,7 @@
       0,
       [ "@query" ],
       0,
-      "b2573db47016892b75820678c838594b"
+      "f42228c5ca309c3caedcd84071207a06"
     ],
     [
       "Vale.AES.X64.AESopt.scratch_reqs",
@@ -41,7 +41,7 @@
         "typing_FStar.Seq.Base.length"
       ],
       0,
-      "2bb249919a620a603eb1d67edf386674"
+      "fcb1f64c157bc1e3a62821fce4184116"
     ],
     [
       "Vale.AES.X64.AESopt.va_quick_Load_two_lsb",
@@ -53,7 +53,7 @@
         "fuel_guarded_inversion_FStar.Pervasives.Native.tuple3"
       ],
       0,
-      "cabb445e886c4e08f53efbe13d7d47f4"
+      "0a7a253aa98b987bebbc72f0496056b8"
     ],
     [
       "Vale.AES.X64.AESopt.va_quick_Load_one_lsb",
@@ -65,7 +65,7 @@
         "fuel_guarded_inversion_FStar.Pervasives.Native.tuple3"
       ],
       0,
-      "116c9a2e9e0afb19389143f4f46f1dc6"
+      "ef3bb35f24e5088a92e99d43590a9a5f"
     ],
     [
       "Vale.AES.X64.AESopt.va_lemma_Loop6x_final",
@@ -93,7 +93,7 @@
         "typing_FStar.Seq.Base.length"
       ],
       0,
-      "cdac7283fafedb41c57132a3bbdf0ffe"
+      "bc7eccab46663bdf50e4b44b48a6659b"
     ],
     [
       "Vale.AES.X64.AESopt.va_wp_Loop6x_final",
@@ -114,7 +114,7 @@
         "typing_FStar.Seq.Base.length"
       ],
       0,
-      "2592b4fa65e3b2b98f6b0a91af6a64b3"
+      "3865fc2b736825b5373f63fbe60ac3fc"
     ],
     [
       "Vale.AES.X64.AESopt.va_quick_Loop6x_final",
@@ -126,7 +126,7 @@
         "fuel_guarded_inversion_FStar.Pervasives.Native.tuple3"
       ],
       0,
-      "3860604679dd29fdc6a3e013ec07bc9c"
+      "dfb9ef674c6abecb299ccf6a810a8161"
     ],
     [
       "Vale.AES.X64.AESopt.va_lemma_Loop6x_save_output",
@@ -162,7 +162,7 @@
         "typing_tok_Vale.Arch.HeapTypes_s.TUInt128@tok"
       ],
       0,
-      "60b8898ed7d8edb0eafeb556453da018"
+      "375f078eaab08fbe4c9fa2fb34236136"
     ],
     [
       "Vale.AES.X64.AESopt.va_wp_Loop6x_save_output",
@@ -219,7 +219,7 @@
         "fuel_guarded_inversion_FStar.Pervasives.Native.tuple3"
       ],
       0,
-      "b523b6df5e39f241b49754d9d8d3035c"
+      "0664048a550667156cae44547e6aaa66"
     ],
     [
       "Vale.AES.X64.AESopt.va_lemma_untransformedoriginal_Loop6x_partial",
@@ -244,7 +244,7 @@
         "typing_FStar.Seq.Base.length"
       ],
       0,
-      "ea95eece893a4ccd001b61739bd039a8"
+      "21e5cc1e8bd7ee2330d2e165a01a7c70"
     ],
     [
       "Vale.AES.X64.AESopt.va_lemma_Loop6x_partial",
@@ -269,7 +269,7 @@
         "typing_FStar.Seq.Base.length"
       ],
       0,
-      "c74ed1f40473fc9e4dc246e5fff06a3d"
+      "30d09245f6e7bbd6b82a9bf6e0434bdb"
     ],
     [
       "Vale.AES.X64.AESopt.va_wp_Loop6x_partial",
@@ -290,7 +290,7 @@
         "typing_FStar.Seq.Base.length"
       ],
       0,
-      "0cf1860b4110f4fc454879f161e2473d"
+      "cd99279f564680c18783e8c1457ed599"
     ],
     [
       "Vale.AES.X64.AESopt.va_quick_Loop6x_partial",
@@ -303,7 +303,7 @@
         "fuel_guarded_inversion_FStar.Pervasives.Native.tuple3"
       ],
       0,
-      "8ab0adaa0231019cffca58e73011c084"
+      "c4fee0850f5294a54a69256efdaa9c77"
     ],
     [
       "Vale.AES.X64.AESopt.va_lemma_Loop6x",
@@ -317,6 +317,7 @@
         "constructor_distinct_Vale.AES.AES_common_s.AES_128",
         "constructor_distinct_Vale.AES.AES_common_s.AES_256",
         "constructor_distinct_Vale.Arch.HeapTypes_s.TUInt128",
+        "data_typing_intro_Vale.X64.Machine_s.Reg@tok",
         "equality_tok_Vale.AES.AES_common_s.AES_128@tok",
         "equality_tok_Vale.AES.AES_common_s.AES_256@tok",
         "equality_tok_Vale.Arch.HeapTypes_s.Secret@tok",
@@ -329,6 +330,12 @@
         "equation_Vale.X64.Decls.validDstAddrs",
         "equation_Vale.X64.Decls.validDstAddrsOffset128",
         "equation_Vale.X64.Decls.validSrcAddrs",
+        "equation_Vale.X64.Machine_s.n_reg_files",
+        "equation_Vale.X64.Machine_s.n_regs",
+        "equation_Vale.X64.Machine_s.reg_file_id",
+        "equation_Vale.X64.Machine_s.reg_id",
+        "equation_Vale.X64.Machine_s.t_reg",
+        "equation_Vale.X64.Machine_s.t_reg_file",
         "equation_Vale.X64.Memory.base_typ_as_vale_type",
         "equation_Vale.X64.Memory.buffer128",
         "fuel_guarded_inversion_Vale.Def.Words_s.four",
@@ -340,14 +347,20 @@
         "primitive_Prims.op_Equality", "primitive_Prims.op_LessThanOrEqual",
         "proj_equation_Vale.Arch.HeapImpl.Mkvale_full_heap_vf_heaplets",
         "proj_equation_Vale.Arch.HeapImpl.Mkvale_full_heap_vf_layout",
+        "proj_equation_Vale.X64.Machine_s.Reg_rf",
         "proj_equation_Vale.X64.State.Mkvale_state_vs_heap",
         "projection_inverse_BoxBool_proj_0",
         "projection_inverse_BoxInt_proj_0",
+        "projection_inverse_Vale.X64.Machine_s.Reg_rf",
+        "refinement_interpretation_Tm_refine_0559236e7a05befcc7b6302f3642ad81",
         "refinement_interpretation_Tm_refine_542f9d4f129664613f2483a6c88bc7c2",
+        "refinement_interpretation_Tm_refine_d9979b96a3f2b18961b3dd63a2783b64",
         "refinement_interpretation_Tm_refine_e7cdbd18c20ddceca8fbe547e5c93a7e",
         "typing_Vale.Arch.HeapImpl.__proj__Mkvale_full_heap__item__vf_heaplets",
         "typing_Vale.Lib.Map16.sel", "typing_Vale.X64.Memory.buffer_length",
+        "typing_Vale.X64.Regs.sel",
         "typing_Vale.X64.State.__proj__Mkvale_state__item__vs_heap",
+        "typing_Vale.X64.State.__proj__Mkvale_state__item__vs_regs",
         "typing_tok_Vale.AES.AES_common_s.AES_128@tok",
         "typing_tok_Vale.Arch.HeapTypes_s.TUInt128@tok"
       ],
@@ -424,7 +437,7 @@
         "fuel_guarded_inversion_FStar.Pervasives.Native.tuple3"
       ],
       0,
-      "3adcbc32642acdf22dd9385cd28dfdd6"
+      "614903c26de6c178dba8fdb1371b2d9a"
     ]
   ]
 ]

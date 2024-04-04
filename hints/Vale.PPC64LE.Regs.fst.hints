@@ -12,7 +12,7 @@
         "equation_Vale.PPC64LE.Regs.equal"
       ],
       0,
-      "f824b53253868793439ba52bb865e9b1"
+      "3bde4461fc99c7d7ae3baede33dc5d76"
     ],
     [
       "Vale.PPC64LE.Regs.lemma_equal_elim",
@@ -33,7 +33,7 @@
         "typing_Tm_abs_13b257b5b211a4bb6190b81c006bd8dc"
       ],
       0,
-      "dd84da04eb02aec3ee86587c185a741a"
+      "3c8c9c62ef01ae9c32affed6de86aa97"
     ]
   ]
 ]

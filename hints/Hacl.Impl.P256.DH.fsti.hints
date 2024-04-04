@@ -33,7 +33,7 @@
         "typing_tok_Lib.Buffer.MUT@tok"
       ],
       0,
-      "2c80c0e2300d2a8c6c26a17808c3d491"
+      "8c272e35058b8f27a6d19eaacf1ad953"
     ],
     [
       "Hacl.Impl.P256.DH.ecp256dh_r",
@@ -67,7 +67,7 @@
         "typing_tok_Lib.Buffer.MUT@tok"
       ],
       0,
-      "3051c974c22d6f8cb6c0863755015d1f"
+      "8baddadbd64b33d135acb99f840af710"
     ]
   ]
 ]

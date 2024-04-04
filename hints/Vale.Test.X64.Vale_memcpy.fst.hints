@@ -115,7 +115,7 @@
         "typing_tok_Vale.Arch.HeapTypes_s.TUInt64@tok", "unit_typing"
       ],
       0,
-      "355397fcd0e3d19e115599cb9a7a36b8"
+      "780450025d788c14f0d5178ea60f9e1c"
     ],
     [
       "Vale.Test.X64.Vale_memcpy.va_wpProof_InnerMemcpy",
@@ -201,7 +201,7 @@
         "typing_tok_Vale.Arch.HeapTypes_s.TUInt64@tok", "unit_typing"
       ],
       0,
-      "341e72f6108fb6a9ffbc351582d7a3f4"
+      "7516afda1a228faf7911bb52e6b05925"
     ],
     [
       "Vale.Test.X64.Vale_memcpy.va_quick_InnerMemcpy",
@@ -213,7 +213,7 @@
         "fuel_guarded_inversion_FStar.Pervasives.Native.tuple3"
       ],
       0,
-      "9d407470a51e9387cce36c4ee2487952"
+      "d151fcbbe1903c4d5a0fc8426bbe2a48"
     ],
     [
       "Vale.Test.X64.Vale_memcpy.va_lemma_Memcpy",
@@ -379,7 +379,7 @@
         "typing_tok_Vale.Arch.HeapTypes_s.TUInt64@tok", "unit_typing"
       ],
       0,
-      "c42f807765e791cee5745a7439729ca5"
+      "b1025b40f6d85d3e5d4e92c5897a45d5"
     ],
     [
       "Vale.Test.X64.Vale_memcpy.va_wpProof_Memcpy",
@@ -479,7 +479,7 @@
         "typing_tok_Vale.Arch.HeapTypes_s.TUInt64@tok", "unit_typing"
       ],
       0,
-      "20387d25a5d5e9f6c35eccada946b0c7"
+      "3e24bc55df17b783c6ad2b3a448d5754"
     ],
     [
       "Vale.Test.X64.Vale_memcpy.va_quick_Memcpy",
@@ -491,7 +491,7 @@
         "fuel_guarded_inversion_FStar.Pervasives.Native.tuple3"
       ],
       0,
-      "0a3cf92b10bd76d8558f64e289e68f84"
+      "365a6dbfb9966984e24abff6be52e330"
     ]
   ]
 ]

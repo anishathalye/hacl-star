@@ -27,7 +27,7 @@
         "typing_tok_Lib.IntTypes.U32@tok"
       ],
       0,
-      "66948bf2e07e01423f8ec200067d9766"
+      "71f6b608c4761db3b8449a2328cc2ea2"
     ],
     [
       "Hacl.Impl.Curve25519.Lemmas.lemma_nat_from_uints64_le_4",
@@ -74,7 +74,7 @@
         "typing_tok_Lib.IntTypes.U64@tok"
       ],
       0,
-      "5013b375106f2b1678240f6582d092aa"
+      "f290eec511b7e8b9a2e18f80c22096df"
     ],
     [
       "Hacl.Impl.Curve25519.Lemmas.lemma_nat_from_uints64_le_4",
@@ -121,7 +121,7 @@
         "typing_tok_Lib.IntTypes.U64@tok"
       ],
       0,
-      "339ce6a54f35547f3907f571151dc79d"
+      "473dcf639f0b42cdf6364633582daafa"
     ]
   ]
 ]

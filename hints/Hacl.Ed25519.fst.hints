@@ -106,7 +106,7 @@
         "typing_tok_Spec.Hash.Definitions.SHA2_512@tok"
       ],
       0,
-      "c8bbb4aa2150b073b6d27bb15f75d371"
+      "7082e7184ee157b0b97c1b6a8e371e34"
     ],
     [
       "Hacl.Ed25519.secret_expand",
@@ -285,7 +285,7 @@
         "typing_tok_Spec.Hash.Definitions.SHA2_512@tok", "unit_typing"
       ],
       0,
-      "947436b22ab94d73694992d37c85a46a"
+      "f73561adc0ca3ed16db0a249005b7ccd"
     ],
     [
       "Hacl.Ed25519.secret_to_public",
@@ -318,7 +318,7 @@
         "typing_tok_Lib.Buffer.MUT@tok"
       ],
       0,
-      "75257de17845ea9dc136237f38d976a8"
+      "f02b6ed3a17628653a33c53b7f788943"
     ],
     [
       "Hacl.Ed25519.secret_to_public",
@@ -519,7 +519,7 @@
         "typing_tok_Spec.Hash.Definitions.SHA2_224@tok"
       ],
       0,
-      "620365dcd59e31fe53b64f4b80159852"
+      "d06d8a2da9332128bca7d6923167af11"
     ],
     [
       "Hacl.Ed25519.expand_keys",
@@ -624,7 +624,7 @@
         "typing_tok_Spec.Hash.Definitions.SHA2_512@tok"
       ],
       0,
-      "fc701e30201fcdf03d750badfac65042"
+      "6c2cadfde4995238045aa92f9d2ec94f"
     ],
     [
       "Hacl.Ed25519.expand_keys",
@@ -752,7 +752,7 @@
         "typing_tok_Spec.Hash.Definitions.SHA2_224@tok"
       ],
       0,
-      "365b6dd5eca5191d090e49d1b20afbbf"
+      "c331d73015d5f1c129cdebffc45dcf75"
     ],
     [
       "Hacl.Ed25519.sign_expanded",
@@ -857,7 +857,7 @@
         "typing_tok_Spec.Hash.Definitions.SHA2_224@tok"
       ],
       0,
-      "b1770addbf75ca5377a6874df517a374"
+      "c6487a630357ca057971a4bbb117aaa2"
     ],
     [
       "Hacl.Ed25519.sign",
@@ -887,7 +887,7 @@
         "typing_tok_Lib.Buffer.MUT@tok"
       ],
       0,
-      "b961180b32f1b431002fa0b284a80261"
+      "b5f002d45f5232de9d6719b3bac1d40b"
     ],
     [
       "Hacl.Ed25519.sign",
@@ -1076,7 +1076,7 @@
         "typing_tok_Spec.Hash.Definitions.SHA2_224@tok"
       ],
       0,
-      "4d076046f92d3d9d537decc7edc3b696"
+      "90b676f6cf66c18583beda102a25218d"
     ],
     [
       "Hacl.Ed25519.verify",
@@ -1107,7 +1107,7 @@
         "typing_LowStar.Monotonic.Buffer.len"
       ],
       0,
-      "d0ccc33958dbc62d940541cdbe0fab35"
+      "82459023c8ef997c3c9fecbd02981da4"
     ]
   ]
 ]

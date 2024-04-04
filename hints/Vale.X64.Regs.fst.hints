@@ -24,7 +24,7 @@
         "typing_Vale.Lib.Map16.sel16", "typing_Vale.X64.Machine_s.n_regs"
       ],
       0,
-      "8ecc1452d846ce8b1e148e008aa0236a"
+      "762ae9344bcb809686ab1c84a1ec3e38"
     ],
     [
       "Vale.X64.Regs.upd",
@@ -42,7 +42,7 @@
         "typing_Vale.X64.Machine_s.n_regs"
       ],
       0,
-      "8fa1b92ef506c78dd7c726f844512068"
+      "3f8922ae81f617158a46aacee6eb20fc"
     ],
     [
       "Vale.X64.Regs.eta",
@@ -78,7 +78,7 @@
         "refinement_interpretation_Tm_refine_fe479871b3967d0c9b8d8614ccf88035"
       ],
       0,
-      "8e632c0020390319cf281049d3a395f6"
+      "f91eb96393012e6eb3d0134bd959faca"
     ],
     [
       "Vale.X64.Regs.of_fun",
@@ -115,7 +115,7 @@
         "typing_Vale.X64.Machine_s.n_regs"
       ],
       0,
-      "679b7543fe46e32b915302be51f08af0"
+      "8dadad6fee3615e32e853381314ea6e6"
     ],
     [
       "Vale.X64.Regs.lemma_upd_eq",
@@ -149,7 +149,7 @@
         "typing_Vale.X64.Machine_s.__proj__Reg__item__rf"
       ],
       0,
-      "58fb62fd3ed7ccb1a925b7100a604d9b"
+      "712fc51ad33bd517a8f659cff1720b14"
     ],
     [
       "Vale.X64.Regs.lemma_upd_ne",
@@ -188,7 +188,7 @@
         "typing_Vale.X64.Machine_s.n_regs"
       ],
       0,
-      "d5f6230a0cdb5230863de01208542ef2"
+      "43db08524522dc38da2c551f50a39225"
     ],
     [
       "Vale.X64.Regs.lemma_equal_intro",
@@ -221,7 +221,7 @@
         "refinement_interpretation_Tm_refine_d9979b96a3f2b18961b3dd63a2783b64"
       ],
       0,
-      "5ef275f09c51b96e9e6e277c160fc856"
+      "7be6a658911a0c36a2a449f7ac2a4df7"
     ],
     [
       "Vale.X64.Regs.lemma_equal_elim",
@@ -230,7 +230,7 @@
       0,
       [ "@query", "eq2-interp", "equation_Vale.X64.Regs.equal" ],
       0,
-      "b840bb1011a4c52c7aa22c3199894d82"
+      "bd19a388c050e480b1eb7e08cfbf34ff"
     ],
     [
       "Vale.X64.Regs.lemma_eta",
@@ -275,7 +275,7 @@
         "typing_Vale.X64.Regs.eta", "typing_Vale.X64.Regs.eta_sel"
       ],
       0,
-      "bae5e7aaeaf310eb1f9ff3f4d762abf4"
+      "87fe73a6de6192e868e28c22c8c8c107"
     ]
   ]
 ]

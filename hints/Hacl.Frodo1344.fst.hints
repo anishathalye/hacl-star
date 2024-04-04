@@ -87,7 +87,7 @@
         "typing_tok_Spec.Frodo.Params.Frodo1344@tok"
       ],
       0,
-      "a184f2474561da1ba0a3d41dafd0d6c6"
+      "0165b8d7b84c9e5216bf6b5286caba6b"
     ],
     [
       "Hacl.Frodo1344.crypto_secretkeybytes",
@@ -187,7 +187,7 @@
         "typing_tok_Spec.Frodo.Params.Frodo1344@tok"
       ],
       0,
-      "77b61cf9d6919b8bc79f69965f3813a5"
+      "3f92840094997af8eb0967d066315588"
     ],
     [
       "Hacl.Frodo1344.crypto_ciphertextbytes",
@@ -277,7 +277,7 @@
         "typing_tok_Spec.Frodo.Params.Frodo1344@tok"
       ],
       0,
-      "c550bd4eadc12b223bcc0d1088f1e7ca"
+      "0c064afb3a085927268c522b98e83cc4"
     ],
     [
       "Hacl.Frodo1344.crypto_kem_keypair",
@@ -291,7 +291,7 @@
         "projection_inverse_BoxBool_proj_0"
       ],
       0,
-      "e18052e2d7c08b79a2303a23c9091a85"
+      "6b723c2ca1e3f294da87706ce1a337e6"
     ],
     [
       "Hacl.Frodo1344.crypto_kem_keypair",
@@ -324,7 +324,7 @@
         "typing_Spec.GaloisField.__proj__GF__item__t"
       ],
       0,
-      "2e525f730bdb031129599db4019b54b3"
+      "97021d61616c761e10a6f91e94c8185f"
     ],
     [
       "Hacl.Frodo1344.crypto_kem_enc",
@@ -338,7 +338,7 @@
         "projection_inverse_BoxBool_proj_0"
       ],
       0,
-      "eb53ff1edd051844edf91bdb68e27f5a"
+      "58150d3c5b5e7e8facb3d70eb4db725e"
     ],
     [
       "Hacl.Frodo1344.crypto_kem_enc",
@@ -371,7 +371,7 @@
         "typing_Spec.GaloisField.__proj__GF__item__t"
       ],
       0,
-      "742d3b45e195415c98852c8213c3df5b"
+      "258e4279ccf8dd98495ee65cd643b560"
     ],
     [
       "Hacl.Frodo1344.crypto_kem_dec",
@@ -385,7 +385,7 @@
         "projection_inverse_BoxBool_proj_0"
       ],
       0,
-      "cd8afa61192d15fa48dbd0ca770c1672"
+      "1aa0b7ddb51cf96e59dc445652aa4e83"
     ],
     [
       "Hacl.Frodo1344.crypto_kem_dec",
@@ -418,7 +418,7 @@
         "typing_Spec.GaloisField.__proj__GF__item__t"
       ],
       0,
-      "7bcc8a9a0185cb9c6f7a1bc735be19ac"
+      "bc61c661166b8cbc7cf9703b84f42d42"
     ]
   ]
 ]

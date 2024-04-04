@@ -18,7 +18,7 @@
         "projection_inverse_Vale.X64.Machine_Semantics_s.Mkmachine_state_ms_stackTaint"
       ],
       0,
-      "cc5badd4af213ed09335e064e6ba8bcf"
+      "646e7d99dd79bbd3cdc64288a2bd3fae"
     ],
     [
       "Vale.Transformers.InstructionReorderSanityChecks.sanity_check_unchanged_except1",
@@ -80,7 +80,7 @@
         "unit_inversion", "unit_typing"
       ],
       0,
-      "84010f0dff5ce38b681f97197292c0df"
+      "a7eef39562561a21994a78e21bb12d5f"
     ]
   ]
 ]

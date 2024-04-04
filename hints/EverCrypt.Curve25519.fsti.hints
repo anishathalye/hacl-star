@@ -51,7 +51,7 @@
         "typing_Lib.Buffer.length", "typing_tok_Lib.Buffer.MUT@tok"
       ],
       0,
-      "76638ef5c6106eb40a3e33d74735fb9b"
+      "1de052356529419ec0703a21158477e3"
     ],
     [
       "EverCrypt.Curve25519.scalarmult",
@@ -88,7 +88,7 @@
         "typing_tok_Lib.Buffer.MUT@tok"
       ],
       0,
-      "b307c9a9d7021d35ada9f6ca1810fb54"
+      "4bae2cc0d0bd53402a02df0ff5f145a3"
     ],
     [
       "EverCrypt.Curve25519.ecdh",
@@ -155,7 +155,7 @@
         "typing_tok_Lib.IntTypes.U32@tok", "typing_tok_Lib.IntTypes.U8@tok"
       ],
       0,
-      "1fb4b70cd6d8a8d9d5e1060e1caa1b34"
+      "aed7506243f83fb4254235eb00037de6"
     ]
   ]
 ]

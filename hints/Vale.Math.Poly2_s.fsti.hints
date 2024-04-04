@@ -11,7 +11,7 @@
         "refinement_interpretation_Tm_refine_754b00004f4a881ff74d076ab276dfe1"
       ],
       0,
-      "4458c4a5549dbcca60097a57391e0321"
+      "2db9088e6023ffa8b2de7a1c81aea4b9"
     ],
     [
       "Vale.Math.Poly2_s.of_poly",
@@ -20,7 +20,7 @@
       0,
       [ "@query" ],
       0,
-      "04f8fb00846b45dd8ea85683006192c7"
+      "0b56c0f51b6b0764046ed15864544183"
     ],
     [
       "Vale.Math.Poly2_s.reveal_defs",
@@ -52,7 +52,7 @@
         "typing_Vale.Math.Poly2.Defs_s.zero"
       ],
       0,
-      "6644633b6acbfe1b146cb5690a8c6d2c"
+      "8660f6a1eaba279c91afd070fa295df7"
     ]
   ]
 ]

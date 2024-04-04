@@ -28,7 +28,7 @@
         "typing_Spec.Hash.Definitions.is_shake"
       ],
       0,
-      "284b38bf04b05d842a4adf0afb295711"
+      "8f081557a4083a0ffa38131f0c42e5b7"
     ],
     [
       "Hacl.HPKE.Interface.HKDF.hkdf_expand",
@@ -57,7 +57,7 @@
         "typing_Spec.Hash.Definitions.is_shake"
       ],
       0,
-      "ccbc27eaa3e9df2ee5937648e2942921"
+      "4cca5fd80bf8dec043da8f76830ba55a"
     ],
     [
       "Hacl.HPKE.Interface.HKDF.hkdf_extract_kem",
@@ -93,7 +93,7 @@
         "typing_Spec.Hash.Definitions.is_shake"
       ],
       0,
-      "28febe30edad3d68d76935e6dfebbd5e"
+      "7c190e0af39cf0c319cc21f1d19b85f6"
     ],
     [
       "Hacl.HPKE.Interface.HKDF.hkdf_expand_kem",
@@ -129,7 +129,7 @@
         "typing_Spec.Hash.Definitions.is_shake"
       ],
       0,
-      "fb9d8db280a5c5cdddfaa4eb3042e08d"
+      "9ad5beb87ecda54469c552a484a1f9ac"
     ]
   ]
 ]

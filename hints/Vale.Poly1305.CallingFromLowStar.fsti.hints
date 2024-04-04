@@ -54,7 +54,7 @@
         "typing_tok_Vale.Arch.HeapTypes_s.TUInt8@tok"
       ],
       0,
-      "4224138320898d12587fc30538c71dd2"
+      "789a44d32db1cca8110e8ec78268f8f7"
     ],
     [
       "Vale.Poly1305.CallingFromLowStar.lemma_call_poly1305",
@@ -154,7 +154,7 @@
         "typing_tok_Vale.Arch.HeapTypes_s.TUInt8@tok"
       ],
       0,
-      "8598d7602ed1017c0fb56b0cd3ca0e96"
+      "70fee1135cc5683fea248e72117d5948"
     ]
   ]
 ]

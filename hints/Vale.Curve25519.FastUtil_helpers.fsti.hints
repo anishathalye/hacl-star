@@ -17,7 +17,7 @@
         "refinement_interpretation_Tm_refine_c1424615841f28cac7fc34e92b7ff33c"
       ],
       0,
-      "acbb07559c6a579eae7ae83634fc1c18"
+      "1c4d282ce4da5c2fa8f4e810a0d388f4"
     ],
     [
       "Vale.Curve25519.FastUtil_helpers.lemma_sub3",
@@ -31,7 +31,7 @@
         "refinement_interpretation_Tm_refine_414d0a9f578ab0048252f8c8f552b99f"
       ],
       0,
-      "3b56e58e70e21641c8e88637461d7369"
+      "218c3ae99cca89084b3897789181b3a2"
     ],
     [
       "Vale.Curve25519.FastUtil_helpers.lemma_sub",
@@ -45,7 +45,7 @@
         "refinement_interpretation_Tm_refine_414d0a9f578ab0048252f8c8f552b99f"
       ],
       0,
-      "9cf9491a859889de28700aeb806e54b8"
+      "76ddbdcdc4ab3a2de6e98bd7a53b35a9"
     ]
   ]
 ]
