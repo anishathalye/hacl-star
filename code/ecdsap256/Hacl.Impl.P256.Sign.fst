@@ -109,12 +109,13 @@ let ecdsa_sign_load d_a k_q private_key nonce =
 
 
 inline_for_extraction noextract
-val check_signature: are_sk_nonce_valid:uint64 -> r_q:felem -> s_q:felem -> Stack bool
+val check_signature: are_sk_nonce_valid:uint64 -> r_q:felem -> s_q:felem -> Stack uint32
   (requires fun h ->
     live h r_q /\ live h s_q /\ disjoint r_q s_q /\
     (v are_sk_nonce_valid = ones_v U64 \/ v are_sk_nonce_valid = 0))
   (ensures fun h0 res h1 -> modifies0 h0 h1 /\
-    res == ((v are_sk_nonce_valid = ones_v U64) && (0 < as_nat h0 r_q) && (0 < as_nat h0 s_q)))
+    (v res = ones_v U32 \/ v res = 0) /\
+    ((v res = ones_v U32) == ((v are_sk_nonce_valid = ones_v U64) && (0 < as_nat h0 r_q) && (0 < as_nat h0 s_q))))
 
 let check_signature are_sk_nonce_valid r_q s_q =
   let h0 = ST.get () in
@@ -130,7 +131,7 @@ let check_signature are_sk_nonce_valid r_q s_q =
   logand_lemma are_sk_nonce_valid m2;
   assert ((v m = ones_v U64) <==>
     ((v are_sk_nonce_valid = ones_v U64) && (0 < as_nat h0 r_q) && (0 < as_nat h0 s_q)));
-  BB.unsafe_bool_of_limb m
+  cast U32 SEC m
 
 
 val ecdsa_sign_msg_as_qelem:
@@ -138,7 +139,7 @@ val ecdsa_sign_msg_as_qelem:
   -> m_q:felem
   -> private_key:lbuffer uint8 32ul
   -> nonce:lbuffer uint8 32ul ->
-  Stack bool
+  Stack uint32
   (requires fun h ->
     live h signature /\ live h m_q /\ live h private_key /\ live h nonce /\
     disjoint signature m_q /\ disjoint signature private_key /\ disjoint signature nonce /\
@@ -147,7 +148,8 @@ val ecdsa_sign_msg_as_qelem:
   (ensures fun h0 flag h1 -> modifies (loc signature |+| loc m_q) h0 h1 /\
     (let sgnt = S.ecdsa_sign_msg_as_qelem
       (as_nat h0 m_q) (as_seq h0 private_key) (as_seq h0 nonce) in
-     (flag <==> Some? sgnt) /\ (flag ==> (as_seq h1 signature == Some?.v sgnt))))
+     (v flag = ones_v U32 \/ v flag = 0) /\
+     ((v flag = ones_v U32) <==> Some? sgnt) /\ ((v flag = ones_v U32) ==> (as_seq h1 signature == Some?.v sgnt))))
 
 [@CInline]
 let ecdsa_sign_msg_as_qelem signature m_q private_key nonce =

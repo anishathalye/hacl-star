@@ -24,14 +24,15 @@ let ecdsa_sign_p256_st (alg:S.hash_alg_ecdsa) =
   -> msg:lbuffer uint8 msg_len
   -> private_key:lbuffer uint8 32ul
   -> nonce:lbuffer uint8 32ul ->
-  Stack bool
+  Stack uint32
   (requires fun h ->
     live h signature /\ live h msg /\ live h private_key /\ live h nonce /\
     disjoint signature msg /\ disjoint signature private_key /\ disjoint signature nonce)
   (ensures fun h0 flag h1 -> modifies (loc signature) h0 h1 /\
     (let sgnt = S.ecdsa_signature_agile alg (v msg_len)
       (as_seq h0 msg) (as_seq h0 private_key) (as_seq h0 nonce) in
-     (flag <==> Some? sgnt) /\ (flag ==> (as_seq h1 signature == Some?.v sgnt))))
+     (v flag = ones_v U32 \/ v flag = 0) /\
+     ((v flag = ones_v U32) <==> Some? sgnt) /\ ((v flag = ones_v U32) ==> (as_seq h1 signature == Some?.v sgnt))))
 
 
 inline_for_extraction noextract
