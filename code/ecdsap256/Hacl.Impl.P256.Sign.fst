@@ -138,7 +138,7 @@ val check_signature': are_sk_nonce_valid:uint64 -> r_q:felem -> s_q:felem -> Sta
     live h r_q /\ live h s_q /\ disjoint r_q s_q /\
     (v are_sk_nonce_valid = ones_v U64 \/ v are_sk_nonce_valid = 0))
   (ensures fun h0 res h1 -> modifies0 h0 h1 /\
-    v res = ones_v U8 <==> ((v are_sk_nonce_valid = ones_v U64) && (0 < as_nat h0 r_q) && (0 < as_nat h0 s_q)))
+    (v res = ones_v U8 <==> ((v are_sk_nonce_valid = ones_v U64) && (0 < as_nat h0 r_q) && (0 < as_nat h0 s_q))))
 
 let check_signature' are_sk_nonce_valid r_q s_q =
   let h0 = ST.get () in
