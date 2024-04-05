@@ -132,6 +132,30 @@ let check_signature are_sk_nonce_valid r_q s_q =
     ((v are_sk_nonce_valid = ones_v U64) && (0 < as_nat h0 r_q) && (0 < as_nat h0 s_q)));
   BB.unsafe_bool_of_limb m
 
+inline_for_extraction noextract
+val check_signature': are_sk_nonce_valid:uint64 -> r_q:felem -> s_q:felem -> Stack uint8
+  (requires fun h ->
+    live h r_q /\ live h s_q /\ disjoint r_q s_q /\
+    (v are_sk_nonce_valid = ones_v U64 \/ v are_sk_nonce_valid = 0))
+  (ensures fun h0 res h1 -> modifies0 h0 h1 /\
+    v res = ones_v U8 <==> ((v are_sk_nonce_valid = ones_v U64) && (0 < as_nat h0 r_q) && (0 < as_nat h0 s_q)))
+
+let check_signature' are_sk_nonce_valid r_q s_q =
+  let h0 = ST.get () in
+  let is_r_zero = bn_is_zero_mask4 r_q in
+  let is_s_zero = bn_is_zero_mask4 s_q in
+  [@inline_let] let m0 = lognot is_r_zero in
+  [@inline_let] let m1 = lognot is_s_zero in
+  [@inline_let] let m2 = m0 &. m1 in
+  lognot_lemma is_r_zero;
+  lognot_lemma is_s_zero;
+  logand_lemma m0 m1;
+  let m = are_sk_nonce_valid &. m2 in
+  logand_lemma are_sk_nonce_valid m2;
+  assert ((v m = ones_v U64) <==>
+    ((v are_sk_nonce_valid = ones_v U64) && (0 < as_nat h0 r_q) && (0 < as_nat h0 s_q)));
+  cast #_ #_ U8 SEC m
+
 
 val ecdsa_sign_msg_as_qelem:
     signature:lbuffer uint8 64ul
@@ -149,6 +173,10 @@ val ecdsa_sign_msg_as_qelem:
       (as_nat h0 m_q) (as_seq h0 private_key) (as_seq h0 nonce) in
      (flag <==> Some? sgnt) /\ (flag ==> (as_seq h1 signature == Some?.v sgnt))))
 
+// THIS FAILS TO VERIFY:
+// but if we comment out line 141, _weakening_ the postcondition of check_signature'
+// to just (modifies0 h0 h1), then the following goes through
+
 [@CInline]
 let ecdsa_sign_msg_as_qelem signature m_q private_key nonce =
   push_frame ();
@@ -162,5 +190,6 @@ let ecdsa_sign_msg_as_qelem signature m_q private_key nonce =
   ecdsa_sign_s s_q k_q r_q d_a m_q;
   bn2_to_bytes_be4 signature r_q s_q;
   let res = check_signature are_sk_nonce_valid r_q s_q in
+  let _unused:uint8 = check_signature' are_sk_nonce_valid r_q s_q in
   pop_frame ();
   res
